@@ -350,6 +350,11 @@ export default function Signup() {
     // }
   };
 
+  const loginButSubmitHandler = (event) => {
+    event.preventDefault();
+    navigate("/");
+  };
+
   return (
     <div className="LoginMainComponent">
       <div className="ImageSlider">
@@ -504,7 +509,7 @@ export default function Signup() {
               className="LoginClass"
               type="submit"
               value="Login  "
-              onClick={ShowSignupPage}
+              onClick={loginButSubmitHandler}
             ></input>
           </div>
         </form>

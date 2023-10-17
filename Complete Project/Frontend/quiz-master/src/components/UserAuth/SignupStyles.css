@@ -8,7 +8,6 @@
   margin-left: 0%;
 }
 
-
 .UserAuth {
   position: absolute;
   width: 27.5%;
@@ -30,7 +29,7 @@
   font-style: normal;
   font-weight: 700;
   font-size: min(2.5rem, 42px, 4vw);
-  margin-bottom: min(0.3rem,5%);
+  margin-bottom: min(0.3rem, 5%);
   display: flex;
   align-items: center;
   letter-spacing: 0.065em;
@@ -46,11 +45,11 @@
   font-style: normal;
   font-weight: 600;
   font-size: min(1.5rem, 36px, 2vw);
-  line-height:min(24px, 4rem, 2vw);
+  line-height: min(24px, 4rem, 2vw);
   display: flex;
   align-items: center;
   letter-spacing: 0.065em;
-  margin-bottom: min(1rem,20%);
+  margin-bottom: min(1rem, 20%);
   color: #818181;
 }
 
@@ -61,25 +60,25 @@ input {
   background: #ffffff00;
   border: #ffffff00;
   text-indent: 5%;
-  border-radius: min(0.85vw,2rem);
+  border-radius: min(0.85vw, 2rem);
 }
 input:focus {
   outline: solid 0px rgba(255, 255, 255, 0);
   background-color: #ffffff00;
 }
 
-.first_last_name_div{
+.first_last_name_div {
   position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
 }
-.fl_Label{
+.fl_Label {
   display: flex;
   flex-direction: row;
   margin-bottom: 0.2rem;
 }
-.FirstName{
+.FirstName {
   position: relative;
   height: 5%;
   left: 0%;
@@ -88,7 +87,7 @@ input:focus {
   font-style: normal;
   font-weight: 600;
   font-size: min(1.5rem, 36px, 1.5vw);
-  line-height:min(24px, 4rem, 2vw);
+  line-height: min(24px, 4rem, 2vw);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -96,7 +95,7 @@ input:focus {
   color: #818181;
   margin-right: 1.2rem;
 }
-.LastName{
+.LastName {
   position: relative;
   width: 48%;
   height: 5%;
@@ -104,51 +103,51 @@ input:focus {
   font-style: normal;
   font-weight: 600;
   font-size: min(1.5rem, 36px, 1.5vw);
-  line-height:min(24px, 4rem, 2vw);
+  line-height: min(24px, 4rem, 2vw);
   display: flex;
   flex-direction: row;
   align-items: center;
   letter-spacing: 0.065em;
   color: #818181;
 }
-.fl_input{
+.fl_input {
   display: flex;
   flex-direction: row;
-  margin-bottom: min(1rem,10%);
+  margin-bottom: min(1rem, 10%);
 }
-.FirstNameInputText{
+.FirstNameInputText {
   width: 48%;
   box-sizing: border-box;
   position: relative;
-  height: min(5vw,4rem);
+  height: min(5vw, 4rem);
   background: #ffffff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: min(0.85vw,2rem);
+  border-radius: min(0.85vw, 2rem);
   font-family: "Lato";
   font-style: normal;
   font-weight: 600;
   font-size: min(1.3rem, 36px, 1.4vw);
-  line-height:min(24px, 4rem, 2vw);
+  line-height: min(24px, 4rem, 2vw);
   display: flex;
   align-items: center;
   letter-spacing: 0.065em;
   margin-right: 1rem;
 }
 
-.LastNameInputText{
-  height: min(5vw,4rem);
+.LastNameInputText {
+  height: min(5vw, 4rem);
   top: 22%;
   width: 48%;
   box-sizing: border-box;
   position: relative;
   background: #ffffff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: min(0.85vw,2rem);
+  border-radius: min(0.85vw, 2rem);
   font-family: "Lato";
   font-style: normal;
   font-weight: 600;
   font-size: min(1.3rem, 36px, 1.4vw);
-  line-height:min(24px, 4rem, 2vw);
+  line-height: min(24px, 4rem, 2vw);
   display: flex;
   align-items: center;
   letter-spacing: 0.065em;
@@ -162,7 +161,7 @@ input:focus {
   font-style: normal;
   font-weight: 600;
   font-size: min(1.5rem, 36px, 1.5vw);
-  line-height:min(24px, 4rem, 2vw);
+  line-height: min(24px, 4rem, 2vw);
   display: flex;
   align-items: center;
   letter-spacing: 0.065em;
@@ -173,21 +172,21 @@ input:focus {
 .BNumberInputText {
   box-sizing: border-box;
   position: relative;
-  height: min(5vw,4rem);
+  height: min(5vw, 4rem);
 
   background: #ffffff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: min(0.85vw,2rem);
+  border-radius: min(0.85vw, 2rem);
 
   font-family: "Lato";
   font-style: normal;
   font-weight: 600;
   font-size: min(1.3rem, 36px, 1.4vw);
-  line-height:min(24px, 4rem, 2vw);
+  line-height: min(24px, 4rem, 2vw);
   display: flex;
   align-items: center;
   letter-spacing: 0.065em;
-  margin-bottom: min(1rem,10%);
+  margin-bottom: min(1rem, 10%);
 }
 
 .userName1 {
@@ -198,7 +197,7 @@ input:focus {
   font-style: normal;
   font-weight: 600;
   font-size: min(1.5rem, 36px, 1.5vw);
-  line-height:min(24px, 4rem, 2vw);
+  line-height: min(24px, 4rem, 2vw);
   display: flex;
   align-items: center;
   letter-spacing: 0.065em;
@@ -212,21 +211,21 @@ input:focus {
   position: relative;
   box-sizing: border-box;
   position: relative;
-  height: min(5vw,4rem);
+  height: min(5vw, 4rem);
 
   background: #ffffff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: min(0.85vw,2rem);
+  border-radius: min(0.85vw, 2rem);
 
   font-family: "Lato";
   font-style: normal;
   font-weight: 600;
   font-size: min(1.3rem, 36px, 1.4vw);
-  line-height:min(24px, 4rem, 2vw);
+  line-height: min(24px, 4rem, 2vw);
   display: flex;
   align-items: center;
   letter-spacing: 0.065em;
-  margin-bottom: min(1rem,10%);
+  margin-bottom: min(1rem, 10%);
 }
 
 .password1 {
@@ -237,7 +236,7 @@ input:focus {
   font-style: normal;
   font-weight: 600;
   font-size: min(1.5rem, 36px, 1.5vw);
-  line-height:min(24px, 4rem, 2vw);
+  line-height: min(24px, 4rem, 2vw);
   display: flex;
   align-items: center;
   letter-spacing: 0.065em;
@@ -248,21 +247,21 @@ input:focus {
 .passInput1 {
   box-sizing: border-box;
   position: relative;
-  height: min(5vw,4rem);
+  height: min(5vw, 4rem);
 
   background: #ffffff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: min(0.85vw,2rem);
+  border-radius: min(0.85vw, 2rem);
 
   font-family: "Lato";
   font-style: normal;
   font-weight: 600;
   font-size: min(1.3rem, 36px, 1.4vw);
-  line-height:min(24px, 4rem, 2vw);
+  line-height: min(24px, 4rem, 2vw);
   display: flex;
   align-items: center;
   letter-spacing: 0.065em;
-  margin-bottom: min(1rem,10%);
+  margin-bottom: min(1rem, 10%);
 }
 
 .confirmPassword {
@@ -273,7 +272,7 @@ input:focus {
   font-style: normal;
   font-weight: 600;
   font-size: min(1.5rem, 36px, 1.5vw);
-  line-height:min(24px, 4rem, 2vw);
+  line-height: min(24px, 4rem, 2vw);
   display: flex;
   align-items: center;
   letter-spacing: 0.065em;
@@ -284,21 +283,21 @@ input:focus {
 .confirmPassInput {
   box-sizing: border-box;
   position: relative;
-  height: min(5vw,4rem);
+  height: min(5vw, 4rem);
 
   background: #ffffff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: min(0.85vw,2rem);
+  border-radius: min(0.85vw, 2rem);
 
   font-family: "Lato";
   font-style: normal;
   font-weight: 600;
   font-size: min(1.3rem, 36px, 1.4vw);
-  line-height:min(24px, 4rem, 2vw);
+  line-height: min(24px, 4rem, 2vw);
   display: flex;
   align-items: center;
   letter-spacing: 0.065em;
-  margin-bottom: min(3rem,20%);
+  margin-bottom: min(3rem, 20%);
 }
 
 .LoginButton1 {
@@ -306,14 +305,14 @@ input:focus {
 
   position: relative;
   width: 100%;
-  height: min(5vw,4rem);
-  
+  height: min(5vw, 4rem);
+
   background: #005941;
   border: none;
   border-radius: 0.85vw;
-  margin-bottom: min(1rem,7%);
+  margin-bottom: min(1rem, 7%);
 }
-.LoginButton1:hover{
+.LoginButton1:hover {
   background-color: #014a36;
 }
 
@@ -348,8 +347,8 @@ input:focus {
   font-family: "Lato";
   font-style: normal;
   font-weight: 600;
-  font-size: min(1.1rem,1.5vw);
-  line-height: 2rem; 
+  font-size: min(1.1rem, 1.5vw);
+  line-height: 2rem;
   color: #818181;
   text-align: start;
 }
@@ -360,8 +359,8 @@ input:focus {
   font-family: "Lato";
   font-style: normal;
   font-weight: 600;
-  font-size: min(1.3rem,2vw);
-  line-height: 2rem; 
+  font-size: min(1.3rem, 2vw);
+  line-height: 2rem;
   color: #005941;
   width: auto;
 }
