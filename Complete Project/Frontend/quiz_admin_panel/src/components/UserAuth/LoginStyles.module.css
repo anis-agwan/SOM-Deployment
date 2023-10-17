@@ -1,0 +1,293 @@
+/* body,
+html {
+  height: 100%;
+  background: #e4f1ee;
+} */
+.ImageSlider,
+.BinghamtonUniversityImage {
+  position: fixed;
+  width: 70%;
+  height: 90%;
+  left: 0%;
+  top: 12vh;
+  margin-left: 0%;
+}
+
+.UserAuth {
+  position: absolute;
+  width: 28%;
+  height: 85%;
+  left: 70%;
+  top: 11.5%;
+  overflow: auto;
+  margin: 0.7rem;
+  padding: 0.7vw;
+}
+
+.headingTitle {
+  position: relative;
+  width: 50%;
+  height: 20%;
+  left: 0%;
+  top: 0%;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: min(2.5rem, 42px, 4vw);
+  margin-bottom: min(1rem, 5%);
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.065em;
+  color: #005941;
+}
+
+.headText {
+  position: relative;
+  width: auto;
+  height: auto;
+  left: 0%;
+  top: 13.5%;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 600;
+  font-size: min(1.5rem, 36px, 2vw);
+  line-height: min(24px, 4rem, 2vw);
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.065em;
+  margin-bottom: min(3rem, 20%);
+  color: #818181;
+}
+
+input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: #ffffff00;
+  border: #ffffff00;
+  text-indent: 5%;
+  border-radius: min(0.85vw, 2rem);
+}
+input:focus {
+  outline: solid 0px rgba(255, 255, 255, 0);
+  background-color: #ffffff00;
+}
+
+.userName {
+  position: relative;
+  height: 5%;
+  left: 0%;
+  top: 1%;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 600;
+  font-size: min(2.7vw, 2rem);
+  margin-bottom: min(1.5rem, 10%);
+  line-height: 0%;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.065em;
+  z-index: 100;
+  color: #818181;
+}
+
+.userNameInput {
+  box-sizing: border-box;
+  position: relative;
+  height: min(5vw, 4rem);
+
+  background: #ffffff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: min(0.85vw, 2rem);
+
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 600;
+  font-size: min(1.5rem, 36px, 2vw);
+  line-height: min(24px, 4rem, 2vw);
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.065em;
+  margin-bottom: min(3rem, 20%);
+}
+
+.userNameInput.invalid {
+  box-sizing: border-box;
+  position: relative;
+  width: 95%;
+  height: min(5vw, 4rem);
+  border-color: rgb(255, 150, 150);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 0.85vw;
+
+  font-family: "Lato";
+  font-style: normal;
+  font-size: min(1.5rem, 36px, 2vw);
+  line-height: min(24px, 4rem, 2vw);
+  line-height: 29px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.065em;
+}
+
+.password {
+  position: relative;
+  height: 5%;
+  left: 0%;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 600;
+  font-size: min(2.7vw, 2rem);
+  margin-bottom: min(1.5rem, 10%);
+  line-height: 0%;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.065em;
+  z-index: 100;
+  color: #818181;
+}
+
+.passInput {
+  position: relative;
+  width: 95%;
+  height: min(5vw, 4rem);
+  background: #ffffff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 0.85vw;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 600;
+  font-size: min(1.5rem, 36px, 2vw);
+  line-height: min(24px, 4rem, 2vw);
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.065em;
+  margin-bottom: min(3rem, 20%);
+}
+
+.LoginButton {
+  box-sizing: border-box;
+
+  position: relative;
+  width: 95%;
+  height: min(5vw, 4rem);
+
+  background: #005941;
+  border-radius: 0.85vw;
+  margin-bottom: min(1rem, 7%);
+}
+.LoginButton:hover {
+  background-color: #014a36;
+}
+.LoginText {
+  position: relative;
+  left: 0%;
+  width: 100%;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: min(3vw, 2.5rem);
+  display: flex;
+  justify-content: center;
+  vertical-align: middle;
+  text-align: center;
+  letter-spacing: 0.065em;
+
+  color: #ffffff;
+}
+
+.NewUserDiv {
+  position: absolute;
+  width: 40%;
+  height: 40px;
+  left: 0%;
+  top: 70%;
+}
+
+.Signup_forgot_class {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.ButtonsContainer {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.custom-button {
+  position: relative;
+  border-radius: 0px;
+  text-align: left;
+  width: auto;
+  cursor: pointer;
+}
+
+.NewUserClass {
+  position: relative;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 600;
+  font-size: min(1.3rem, 2vw); /* Set your desired font size */
+  line-height: 2rem;
+  color: #818181;
+}
+
+.SignupClass {
+  position: relative;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 600;
+  font-size: min(1.3rem, 2vw); /* Set your desired font size */
+  line-height: 2rem;
+  color: #005941;
+  width: auto;
+}
+
+.ForgotPasswordContainer {
+  position: relative;
+  width: auto;
+  text-align: center;
+  margin-top: 0.1rem;
+  height: 1.5rem;
+}
+
+.ForgotPasswordClass {
+  position: relative;
+  border-radius: 0px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 600;
+  font-size: min(1.3rem, 2vw);
+  line-height: 1rem;
+  word-wrap: break-word;
+  color: #818181;
+  letter-spacing: 0.065em;
+
+  color: #818181;
+}
+
+.ForgotPasswordClass:hover {
+  color: #005941;
+}
+
+/* Media query for screens with a minimum width of 768px */
+@media (min-width: 1800px) {
+  .Signup_forgot_class {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .ButtonsContainer {
+    flex-direction: row;
+    margin-bottom: 0;
+  }
+
+  .ForgotPasswordContainer {
+    margin-top: 0;
+  }
+}
