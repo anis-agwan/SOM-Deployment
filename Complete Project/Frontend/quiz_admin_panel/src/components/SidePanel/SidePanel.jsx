@@ -6,6 +6,7 @@ import downloadPDF from "../images/downloadPDF.svg";
 import searchLogo from "../images/search-icon.svg";
 import { ReportPB } from "./reportPB";
 import axios from "axios";
+import { ReportCT } from "./reportCT";
 import { ReportDD } from "./reportDD";
 import PdfV01 from "../PDFFiles/PdfV01";
 import { PDFDownloadLink } from "@react-pdf/renderer";
@@ -33,6 +34,7 @@ function SidePanel() {
   const [bNumIsValid, setBNumValid] = useState(false);
 
   const [graphPBShow, setPBGraphShow] = useState(false);
+  const [graphCTShow, setCTGraphShow] = useState(false);
   const [graphDDSHow, setDDGraphShow] = useState(false);
   const [student, setStudent] = useState();
   const [isUserValid, setUserValid] = useState(false);
@@ -240,7 +242,7 @@ function SidePanel() {
   };
 
   const getUserDets = async (bnumber) => {
-    const baseUrl = `http://localhost:8440/login-register/login/getUser/${bnumber}`;
+    const baseUrl = `http://3.13.110.40:8080/login-register/login/getUser/${bnumber}`;
 
     try {
       const res = await axios.get(baseUrl);
@@ -262,8 +264,10 @@ function SidePanel() {
       setUserValid(false);
       getUserDets(bNum);
       setPBGraphShow(true);
+      setCTGraphShow(true);
     } else {
       setPBGraphShow(false);
+      setCTGraphShow(false);
     }
   };
 
@@ -465,24 +469,38 @@ function SidePanel() {
                   <input
                     ref={inputRef}
                     required
-                    pattern="[b,B]{1}[0-9]{8}"
+                    // pattern="[b,B]{1}[0-9]{8}"
                     type="text"
                     placeholder="Please enter Student's B-Number"
+                    onChange={bNumChangeHandler}
                   />
                 </div>
                 <div className="BIReports">
                   <img src={searchLogo} alt="Avatar" className="searchImage" />
-                  <button className="BIReports2">Search Student Reports</button>
+                  <button className="BIReports2" onClick={bNumSearchSubmit}>
+                    Search Student Reports
+                  </button>
                 </div>
               </div>
             </form>
             <div className="PBRightSection">
               {/**Graphs can be added here */}
               <h1>Critical Analysis Student Grpahs</h1>
+              {graphCTShow && <ReportCT bnum={bNum} />}
             </div>
             <div className="PBRightRecords">
               {/**Graphs can be added here */}
               <h1>Student details in text</h1>
+              {isUserValid ? (
+                <div>
+                  <p>{student.firstName}</p>
+                  <p>{student.lastName}</p>
+                  <p>{student.emailId}</p>
+                  <p>{student.bingNumber}</p>
+                </div>
+              ) : (
+                <p>Getting User details</p>
+              )}
             </div>
           </div>
         )}

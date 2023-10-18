@@ -61,7 +61,7 @@ export const ReportPB = (props) => {
   const [commentsData, setCommentsData] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const bNum = props.bnum;
-  const baseURL = "http://localhost:8442/personal-beliefs/pb/getScores";
+  const baseURL = "http://3.13.110.40:8441/personal-beliefs/pb/getScores";
   const getPBScoreHandler = async () => {
     // await axios.get(`${baseURL}/${user.bingNumber}`).then((response) => {
     //   // console.log(response.data.openToChangeScore);
@@ -216,14 +216,36 @@ export const ReportPB = (props) => {
     getPBScoreHandler();
     setLoading(true);
   }, []);
-
+  const myPBLabel = [
+    "Open to Change",
+    "Coaching",
+    "Planning and Organizing",
+    "Teamwork",
+    "Empowering",
+  ];
   return (
     <>
       {/* <h1>PB COMP</h1>
       <h1>{user.bingNumber}</h1> */}
-      <div>
+      <div className="PB-report-map">
         {isLoading && Object.keys(pbData.Data).length > 0 && (
-          <Radar data={pbData.Data} options={config}></Radar>
+          <div className="PB-report-data">
+            <Radar data={pbData.Data} options={config}></Radar>
+
+            {commentsData.map((val, idx) => {
+              console.log(val);
+              return (
+                <div key={idx}>
+                  {" "}
+                  <ul>
+                    <li>
+                      <b>{myPBLabel[idx]} :</b> {val}
+                    </li>
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
         )}
       </div>
     </>

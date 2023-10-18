@@ -87,10 +87,10 @@ export const AuthContextProvider = (props) => {
             islog = false;
             throw new Error("Students can not access the faculty portal");
           } else {
-            // console.log("SUCCESS");
             localStorage.setItem("userDetails", JSON.stringify(response.data));
             localStorage.setItem("isLoggedIn", "1");
             setLoggedIn(true);
+            islog = true;
           }
         }
       })

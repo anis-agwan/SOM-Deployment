@@ -84,12 +84,16 @@ export default function Login() {
     // console.log(passwordState.value, passwordState.isValid);
 
     if (formIsValid) {
+      // console.log("CALLING");
       authCtx
         .onLogin(userNameState.value, passwordState.value)
         .then((response) => {
+          // console.log(response);
           if (response) {
+            console.log(response);
             navigate("/reports");
           }
+          console.log(response);
         });
     }
   };
@@ -149,7 +153,7 @@ export default function Login() {
           </div>
         </form>
 
-        <div className={login_styles.Signup_forgot_class} type="submit">
+        <div className={login_styles.Signup_forgot_class}>
           <div className={login_styles.ButtonsContainer}>
             <input
               type="button"
@@ -164,6 +168,7 @@ export default function Login() {
               value="Signup "
             />
           </div>
+
           <form id="ForgotPasswordForm" action="/ForgotPassword">
             <div className={login_styles.ForgotPasswordContainer}>
               <input
