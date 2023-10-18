@@ -226,6 +226,8 @@ function SidePanel() {
       setBNumValid(false);
       setBNum("");
       setPBGraphShow(false);
+      setCTGraphShow(false);
+      setDDGraphShow(false);
       setUserValid(false);
     }
     console.log(bNumIsValid);
@@ -265,9 +267,11 @@ function SidePanel() {
       getUserDets(bNum);
       setPBGraphShow(true);
       setCTGraphShow(true);
+      setDDGraphShow(true);
     } else {
       setPBGraphShow(false);
       setCTGraphShow(false);
+      setDDGraphShow(false);
     }
   };
 
@@ -529,7 +533,6 @@ function SidePanel() {
             <div className="PBRightSection">
               {/**Graphs can be added here */}
               <h1>Difficult Decisions Student Grpahs</h1>
-              <h3>DD</h3>
               {graphDDSHow && <ReportDD bnum={bNum} />}
             </div>
             <div className="PBRightRecords">

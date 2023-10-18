@@ -11,8 +11,14 @@ import {
   Title,
   Tooltip,
   Legend,
+  ArcElement,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+
+import { Pie } from "react-chartjs-2";
+import { splitStringAfterEightWords } from "./split";
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 ChartJS.register(
   CategoryScale,
@@ -23,60 +29,83 @@ ChartJS.register(
   Legend
 );
 
-const state = {
-  labels: ["January", "February", "March", "April", "May"],
-  datasets: [
-    {
-      label: "Rainfall",
-      backgroundColor: "rgba(75,192,192,1)",
-      borderColor: "rgba(0,0,0,1)",
-      borderWidth: 2,
-      data: [65, 59, 80, 81, 56],
-    },
-  ],
-};
-
 export const ReportDD = (props) => {
   const bNum = props.bnum;
   const [ddData, setDDData] = useState({ Data: {} });
-  const [commentsData, setCommentsData] = useState([
-    "Analyses Score",
-    "Connections Score",
-    "Depth Score",
-  ]);
+  const [rateDDData, setRateDDData] = useState({ Data: {} });
+  const [commentsData, setCommentsData] = useState([]);
+  const [rateComments, setRateComments] = useState([]);
   const [isLoading, setLoading] = useState(false);
-  const baseURL =
-    "http://localhost:8444/critical-thinking/critical-thinking/getScores";
+  const baseRankURL = "http://3.14.159.174:8443/situation_q/sq/getRankScores";
+  const baseRateURL = "http://3.14.159.174:8443/situation_q/sq/getRateScores";
 
   const getDDScoreHandler = async () => {
     try {
-      const response = await axios.get(`${baseURL}/${bNum}`);
+      const response1 = await axios.get(`${baseRankURL}/${bNum}`);
+      const response2 = await axios.get(`${baseRateURL}/${bNum}`);
 
-      const dD = [
-        response.data.sec1AnalysisScore,
-        response.data.sec2ConnectionsScore,
-        response.data.sec3DepthScore,
+      const rateDD = [
+        response2.data.convertedDesirabilityDecisionsScore,
+        10 - response2.data.convertedDesirabilityDecisionsScore,
       ];
 
-      console.log(Object.keys(response.data));
+      const rankDD = [
+        response1.data.rankDecisionScore,
+        response1.data.convertedRankDecisionScore,
+      ];
+
+      const desireDD = [
+        response2.data.desirabilityDecisionsScore,
+        response2.data.convertedDesirabilityDecisionsScore,
+      ];
+
+      const comments = [response1.data.judgementScoreComment];
+
+      const rateCom = [response2.data.considerationOfAlternativesScoreComment];
+      // console.log(Object.keys(response.data));
 
       setLoading(false);
       setDDData({
         Data: {
-          labels: ["Section 1", "Section 2", "Section 3"],
+          labels: ["Decision Scores", "Converted Decision Scores"],
           datasets: [
             {
-              label: "Difficult Decisions",
-              backgroundColor: "rgba(75,192,192,1)",
-              borderColor: "rgba(0,0,0,1)",
+              label: "Rank Decision",
+              backgroundColor: "rgba(255, 99, 132, 0.2)",
+              borderColor: "rgba(255, 99, 132, 1)",
               borderWidth: 2,
-              data: dD,
+              data: rankDD,
+            },
+            {
+              label: "Desirability Decision",
+              backgroundColor: "rgba(54, 162, 235, 0.2)",
+              borderColor: "rgba(54, 162, 235, 1)",
+              borderWidth: 2,
+              data: desireDD,
             },
           ],
         },
       });
-
-      console.log(ddData);
+      setRateDDData({
+        Data: {
+          labels: ["Rank Decision"],
+          datasets: [
+            {
+              label: "Difficult Decisions",
+              backgroundColor: [
+                "rgba(255, 99, 132, 0.2)",
+                "rgba(54, 162, 235, 0.2)",
+              ],
+              borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"],
+              borderWidth: 2,
+              data: rateDD,
+            },
+          ],
+        },
+      });
+      setCommentsData(comments);
+      setRateComments(rateCom);
+      // console.log(ddData);
       setLoading(true);
     } catch (err) {
       console.log(err);
@@ -86,7 +115,7 @@ export const ReportDD = (props) => {
   const config = {
     scale: {
       beginAtZero: true,
-      max: 10,
+      max: 20,
       min: 0,
       stepSize: 1,
     },
@@ -99,11 +128,13 @@ export const ReportDD = (props) => {
             return `Score: ${context[0].formattedValue}`;
           },
           label: (context) => {
-            // console.log(context);
             // console.log(data.datasets);
             // console.log(commentsData[context.dataIndex]);
             // const arr = commentsData[context.dataIndex].split(". ");
-            return commentsData[context.dataIndex];
+            // const arr = splitStringAfterEightWords(
+            //   commentsData[context.dataIndex]
+            // );
+            // return arr;
           },
         },
       },
@@ -116,12 +147,58 @@ export const ReportDD = (props) => {
     setLoading(true);
   }, []);
 
+  const myDDLabel = [
+    "Judgement Score Comment",
+    "Consideration of Alternatives Score Comment",
+  ];
+
   return (
     <>
-      <div>
-        {isLoading && Object.keys(ddData.Data).length > 0 && (
-          <Bar data={ddData.Data} options={config} />
-        )}
+      <div className="PB-report-map">
+        {isLoading &&
+          Object.keys(ddData.Data).length > 0 &&
+          Object.keys(rateDDData.Data).length > 0 && (
+            <div className="PB-report-data">
+              <Bar data={ddData.Data} options={config} />
+              <h5>Rank Decisions</h5>{" "}
+              {commentsData.map((val, idx) => {
+                //   console.log(val);
+                return (
+                  <div key={idx}>
+                    {" "}
+                    <ul>
+                      <li>
+                        <b>{myDDLabel[0]} :</b> {val}
+                      </li>
+                    </ul>
+                  </div>
+                );
+              })}
+              <h5>Desirability Decisions</h5>{" "}
+              {rateComments.map((val, idx) => {
+                //   console.log(val);
+                return (
+                  <div key={idx}>
+                    {" "}
+                    <ul>
+                      <li>
+                        <b>{myDDLabel[1]} :</b> {val}
+                      </li>
+                    </ul>
+                  </div>
+                );
+              })}
+            </div>
+            // <>
+            //   <div className="PB-report-data">
+            //     <Pie data={ddData.Data} />
+            //     <div>Jugdement Score Comment</div>
+            //     <div>{commentsData[0]}</div>
+            //     <Pie data={rateDDData.Data} />
+            //     <div>{rateComments[0]}</div>
+            //   </div>
+            // </>
+          )}
       </div>
     </>
   );
