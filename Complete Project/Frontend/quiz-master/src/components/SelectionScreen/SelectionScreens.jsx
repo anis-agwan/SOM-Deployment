@@ -10,7 +10,7 @@ export default function SelectionScreens() {
       <div className="pbcard">
         <img src={juicy_multitasking} alt="Avatar" className="pbImage" />
         <div className="personalBeliefSelection">
-          <h1 className="personalBeliefTitle">Personal Belifs</h1>
+          <h1 className="personalBeliefTitle">Personal Beliefs</h1>
           <p className="personalBeliefInstructionText">
             This section consists of a number of statements about various
             issues. You need to select the extent to which you agree or disagree
@@ -28,7 +28,7 @@ export default function SelectionScreens() {
       <div className="cacard">
         <img src={juicy_team_analyzes} alt="Avatar" className="caImage" />
         <div className="criticalAnalysisSelection">
-          <h1 className="criticalAnlysisTitle">Critical Anlysis</h1>
+          <h1 className="criticalAnlysisTitle">Critical Analysis</h1>
           <p className="criticalAnalysisInstructionText">
             This section consists of a number of statements about various
             issues. You need to select the extent to which you agree or disagree
