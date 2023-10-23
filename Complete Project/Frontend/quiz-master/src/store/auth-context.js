@@ -84,6 +84,12 @@ export const AuthContextProvider = (props) => {
           );
         } else if (newUser["validationIndicator"] === "Valid") {
           console.log("SUCCESS");
+          if (newUser["role"] === "faculty") {
+            islog = false;
+            throw new Error(
+              "Faculties need permission to access the student portals."
+            );
+          }
           localStorage.setItem("userDetails", JSON.stringify(response.data));
           localStorage.setItem("isLoggedIn", "1");
           setLoggedIn(true);
