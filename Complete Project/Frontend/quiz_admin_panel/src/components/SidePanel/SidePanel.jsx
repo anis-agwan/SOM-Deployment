@@ -362,65 +362,61 @@ function SidePanel() {
             <div className="DashtSection">
               <h1>Dashboard</h1>
             </div>
-            <form>
-              <div className="DashSearchBar">
-                <div className="BIReports1">
-                  <input
-                    ref={inputRef}
-                    required
-                    pattern="[b,B]{1}[0-9]{8}"
-                    type="text"
-                    placeholder="Please enter Student's B-Number"
-                  />
-                </div>
-                <div className="BIReports">
-                  {!showPDFBtn && (
-                    <>
-                      <img
-                        src={searchLogo}
-                        alt="Avatar"
-                        className="searchImage"
-                      />
-                      <button
-                        className="BIReports2"
-                        onClick={() => setShowPDFBtn(true)}
-                      >
-                        Search Student Reports
-                      </button>
-                    </>
-                  )}
-                  {showPDFBtn && (
-                    <>
-                      <img
-                        src={downloadPDF}
-                        alt="Avatar"
-                        className="searchImage"
-                      />
-                      <PDFDownloadLink
-                        className="PDFV01"
-                        document={<PdfV01 />}
-                        fileName={"B00123456" + "_MBA_Assessment_Report"}
-                      >
-                        {({ loading }) =>
-                          loading ? (
-                            <button className="BIReports2">
-                              loading PDF...
-                            </button>
-                          ) : (
-                            <button
-                              className="BIReports2"
-                              onClick={handlePDFClick}
-                            >
-                              Download PDF
-                            </button>
-                          )
-                        }
-                      </PDFDownloadLink>
-                    </>
-                  )}
-                </div>
+            <div className="DashSearchBar">
+              <div className="BIReports1">
+                <input
+                  ref={inputRef}
+                  required
+                  pattern="[b,B]{1}[0-9]{8}"
+                  type="text"
+                  placeholder="Please enter Student's B-Number"
+                />
               </div>
-            </form>
+              <div className="BIReports">
+                {!showPDFBtn && (
+                  <>
+                    <img
+                      src={searchLogo}
+                      alt="Avatar"
+                      className="searchImage"
+                    />
+                    <button
+                      className="BIReports2"
+                      onClick={() => setShowPDFBtn(true)}
+                    >
+                      Search Student Reports
+                    </button>
+                  </>
+                )}
+                {showPDFBtn && (
+                  <>
+                    <img
+                      src={downloadPDF}
+                      alt="Avatar"
+                      className="searchImage"
+                    />
+                    <PDFDownloadLink
+                      className="PDFV01"
+                      document={<PdfV01 />}
+                      fileName={"B00123456" + "_MBA_Assessment_Report"}
+                    >
+                      {({ loading }) =>
+                        loading ? (
+                          <button className="BIReports2">loading PDF...</button>
+                        ) : (
+                          <button
+                            className="BIReports2"
+                            onClick={handlePDFClick}
+                          >
+                            Download PDF
+                          </button>
+                        )
+                      }
+                    </PDFDownloadLink>
+                  </>
+                )}
+              </div>
+            </div>
           </div>
         )}
         {PBShow && (
