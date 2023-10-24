@@ -14,14 +14,14 @@ const BIMenus = ({ bnumber }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const baseUrl = "http://localhost:8080/bbim/bi/";
+    const baseUrl = "http://localhost:8448/bbim/bi/";
     const url = `${baseUrl}getQuestions`;
     setIsLoading(true);
     const fetchQuestions = async () => {
       await axios
         .get(url)
         .then((res) => {
-          //   console.log(res.data);
+          console.log(res.data);
           const data = res.data;
           setQuestionsList(data);
           setIsLoading(false);

@@ -149,7 +149,7 @@ function SidePanel() {
 
   const handleBIStudentInfoSumbit = async (event) => {
     event.preventDefault();
-    const baseUrl = "http://localhost:8440/login-register/login/";
+    const baseUrl = "http://3.13.110.40:8080/login-register/login/";
     const url = `${baseUrl}getUser/${bNum}`;
 
     await axios
@@ -341,14 +341,14 @@ function SidePanel() {
             Behavioral Interview
           </h2>
         </button>
-        <button id="btnClick" onClick={ShowSR} className="BtnContainer">
+        {/* <button id="btnClick" onClick={ShowSR} className="BtnContainer">
           <h2
             className="TitleText"
             style={{ color: SRactive ? "#30FFC7" : "#f8f8f8" }}
           >
             Student Records
           </h2>
-        </button>
+        </button> */}
         <button onClick={logoutRoute} className="LogoutBtn">
           Logout
         </button>
