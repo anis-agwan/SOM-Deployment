@@ -44,6 +44,12 @@ function SidePanel() {
   const [enteredLName, setEnteredLName] = useState("");
   const [enteredDetails, setEnteredDetails] = useState({});
 
+  const [pbData, setPBData] = useState();
+  const [ctData, setCTData] = useState();
+  const [ddData, setDDData] = useState();
+  const [biData, setBIData] = useState();
+  const [isDataLoading, setIsDataLoading] = useState(false);
+
   const ShowDash = () => {
     if (DashShow === true) {
       setDashShow(true);
@@ -240,6 +246,7 @@ function SidePanel() {
       setDDGraphShow(false);
       setUserValid(false);
       setBIGraphShow(false);
+      setShowPDFBtn(false);
     }
     console.log(bNumIsValid);
   };
@@ -268,6 +275,98 @@ function SidePanel() {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const getPBData = async () => {
+    const baseURL = "http://3.13.110.40:8441/personal-beliefs/pb/getScores";
+    if (bNumIsValid) {
+      try {
+        const response = await axios.get(`${baseURL}/${bNum}`);
+        // console.log("Got PB results");
+        // console.log(response.data);
+
+        // return scoreArr;
+        return response.data;
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      console.log("NOT VALID");
+    }
+  };
+
+  const getCTData = async () => {
+    const baseURL =
+      "http://3.14.159.174:8442/critical-thinking/critical-thinking/getScores";
+    if (bNumIsValid) {
+      try {
+        const response = await axios.get(`${baseURL}/${bNum}`);
+        console.log("Got CT results");
+        // console.log(response.data);
+        return response.data;
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      console.log("NOT VALID");
+    }
+  };
+
+  const getDDData = async () => {
+    const baseRankURL = "http://3.14.159.174:8443/situation_q/sq/getRankScores";
+    const baseRateURL = "http://3.14.159.174:8443/situation_q/sq/getRateScores";
+
+    if (bNumIsValid) {
+      try {
+        const response1 = await axios.get(`${baseRankURL}/${bNum}`);
+        const response2 = await axios.get(`${baseRateURL}/${bNum}`);
+
+        return { rankScore: response1.data, rateScore: response2.data };
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      console.log("NOT VALID");
+    }
+  };
+
+  const getBIData = async () => {
+    const baseURL = "http://localhost:8448/bbim/bi/getScores";
+    try {
+      const response = await axios.get(`${baseURL}/${bNum}`);
+      // console.log(response.data);
+
+      return response.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const pdfReportsSearch = async (event) => {
+    event.preventDefault();
+
+    setIsDataLoading(true);
+
+    await getPBData().then((res) => {
+      setPBData(res);
+    });
+    // console.log(pb);
+    await getCTData().then((res) => {
+      setCTData(res);
+    });
+
+    await getDDData().then((res) => {
+      setDDData(res);
+    });
+
+    await getBIData().then((res) => {
+      setBIData(res);
+    });
+
+    // setPBData(pb);
+
+    setShowPDFBtn(true);
+    setIsDataLoading(false);
   };
 
   const bNumSearchSubmit = (event) => {
@@ -394,6 +493,7 @@ function SidePanel() {
                   pattern="[b,B]{1}[0-9]{8}"
                   type="text"
                   placeholder="Please enter Student's B-Number"
+                  onChange={bNumChangeHandler}
                 />
               </div>
               <div className="BIReports">
@@ -404,10 +504,7 @@ function SidePanel() {
                       alt="Avatar"
                       className="searchImage"
                     />
-                    <button
-                      className="BIReports2"
-                      onClick={() => setShowPDFBtn(true)}
-                    >
+                    <button className="BIReports2" onClick={pdfReportsSearch}>
                       Search Student Reports
                     </button>
                   </>
@@ -421,8 +518,16 @@ function SidePanel() {
                     />
                     <PDFDownloadLink
                       className="PDFV01"
-                      document={<PdfV01 />}
-                      fileName={"B00123456" + "_MBA_Assessment_Report"}
+                      document={
+                        <PdfV01
+                          bNum={bNum}
+                          pbData={pbData}
+                          ctData={ctData}
+                          ddData={ddData}
+                          biData={biData}
+                        />
+                      }
+                      fileName={`${bNum} + "_MBA_Assessment_Report`}
                     >
                       {({ loading }) =>
                         loading ? (

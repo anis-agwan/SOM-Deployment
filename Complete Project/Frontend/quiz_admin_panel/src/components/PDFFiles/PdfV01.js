@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+import axios from "axios";
+
 import {
   Page,
   Line,
@@ -107,7 +109,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const PdfV01 = () => {
+const PdfV01 = ({ bNum, pbData, ctData, ddData, biData }) => {
+  console.log(bNum);
+  console.log(pbData);
+  console.log(ctData);
+  console.log(ddData);
+  console.log(biData);
+
   return (
     //Comment PDFViwer when not in use
     // <PDFViewer style={styles.viewer}>
