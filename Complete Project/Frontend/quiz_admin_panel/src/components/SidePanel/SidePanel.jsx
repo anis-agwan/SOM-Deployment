@@ -8,6 +8,7 @@ import { ReportPB } from "./reportPB";
 import axios from "axios";
 import { ReportCT } from "./reportCT";
 import { ReportDD } from "./reportDD";
+import { BIReport } from "./BIReport";
 import PdfV01 from "../PDFFiles/PdfV01";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import BIMenus from "./BIMenus";
@@ -36,6 +37,7 @@ function SidePanel() {
   const [graphPBShow, setPBGraphShow] = useState(false);
   const [graphCTShow, setCTGraphShow] = useState(false);
   const [graphDDSHow, setDDGraphShow] = useState(false);
+  const [graphBIShow, setBIGraphShow] = useState(false);
   const [student, setStudent] = useState();
   const [isUserValid, setUserValid] = useState(false);
   const [enteredFName, setEnteredFName] = useState("");
@@ -53,6 +55,7 @@ function SidePanel() {
       setDDShow(false);
       setBIShow(false);
       setSRShow(false);
+      setBIGraphShow(false);
     }
     setDashActive(true);
     setPBActive(false);
@@ -61,6 +64,7 @@ function SidePanel() {
     setBIActive(false);
     setSRActive(false);
     setShowPDFBtn(false);
+    setBIGraphShow(false);
   };
 
   const ShowPB = () => {
@@ -74,6 +78,7 @@ function SidePanel() {
       setBIShow(false);
       setSRShow(false);
       setDashShow(false);
+      setBIGraphShow(false);
     }
     setDashActive(false);
     setPBActive(true);
@@ -82,6 +87,7 @@ function SidePanel() {
     setBIActive(false);
     setSRActive(false);
     setShowPDFBtn(false);
+    setBIGraphShow(false);
   };
 
   const ShowCA = () => {
@@ -95,6 +101,7 @@ function SidePanel() {
       setBIShow(false);
       setSRShow(false);
       setDashShow(false);
+      setBIGraphShow(false);
     }
     setDashActive(false);
     setPBActive(false);
@@ -103,6 +110,7 @@ function SidePanel() {
     setBIActive(false);
     setSRActive(false);
     setShowPDFBtn(false);
+    setBIGraphShow(false);
   };
 
   const ShowDD = () => {
@@ -116,6 +124,7 @@ function SidePanel() {
       setBIShow(false);
       setSRShow(false);
       setDashShow(false);
+      setBIGraphShow(false);
     }
     setDashActive(false);
     setPBActive(false);
@@ -124,6 +133,7 @@ function SidePanel() {
     setBIActive(false);
     setSRActive(false);
     setBIStudentFormShow(false);
+    setBIGraphShow(false);
   };
 
   const ShowBI = () => {
@@ -229,6 +239,7 @@ function SidePanel() {
       setCTGraphShow(false);
       setDDGraphShow(false);
       setUserValid(false);
+      setBIGraphShow(false);
     }
     console.log(bNumIsValid);
   };
@@ -283,6 +294,19 @@ function SidePanel() {
       setDDGraphShow(true);
     } else {
       setDDGraphShow(false);
+    }
+  };
+
+  const biBnumSearchSubmit = (event) => {
+    event.preventDefault();
+    if (bNumIsValid) {
+      setUserValid(false);
+      getUserDets(bNum);
+      setBIStudentFormShow(false);
+      setBIGraphShow(true);
+    } else {
+      setBIGraphShow(false);
+      setBIStudentFormShow(true);
     }
   };
 
@@ -549,26 +573,49 @@ function SidePanel() {
         )}
         {BIShow && (
           <div className="BIMain">
-            <form action="/BIReports">
-              <div className="BISearchBar">
-                <div className="BIReports1">
-                  <input
-                    ref={inputRef}
-                    required
-                    pattern="[b,B]{1}[0-9]{8}"
-                    type="text"
-                    placeholder="Please enter Student's B-Number"
-                  />
+            {/* <form action="/BIReports"> */}
+            <div className="BISearchBar">
+              <div className="BIReports1">
+                <input
+                  ref={inputRef}
+                  required
+                  // pattern="[b,B]{1}[0-9]{8}"
+                  type="text"
+                  placeholder="Please enter Student's B-Number for behavioral reports"
+                  onChange={bNumChangeHandler}
+                />
+              </div>
+              <div className="BIReports">
+                <img src={searchLogo} alt="Avatar" className="searchImage" />
+                <button className="BIReports2" onClick={biBnumSearchSubmit}>
+                  Behavioral Interview Reports
+                </button>
+              </div>
+            </div>
+            {/* </form> */}
+            {graphBIShow ? (
+              <div>
+                <div className="PBRightSection">
+                  {/**Graphs can be added here */}
+                  <h1>Behavioral Student Grpahs</h1>
+                  {graphBIShow && <BIReport bnum={bNum} />}
                 </div>
-                <div className="BIReports">
-                  <img src={searchLogo} alt="Avatar" className="searchImage" />
-                  <button className="BIReports2">
-                    Behavioral Interview Reports
-                  </button>
+                <div className="PBRightRecords">
+                  {/**Graphs can be added here */}
+                  <h1>Student details in text</h1>
+                  {isUserValid ? (
+                    <div>
+                      <p>{student.firstName}</p>
+                      <p>{student.lastName}</p>
+                      <p>{student.emailId}</p>
+                      <p>{student.bingNumber}</p>
+                    </div>
+                  ) : (
+                    <p>Getting User details</p>
+                  )}
                 </div>
               </div>
-            </form>
-            {BIStudentFormShow ? (
+            ) : BIStudentFormShow ? (
               <div className="BIStudentInfoMainFrame">
                 <div className="BIStudentsInfoTitle">
                   Enter Students Details
@@ -623,72 +670,6 @@ function SidePanel() {
                 </form>
               </div>
             ) : (
-              // <div className="BISection">
-              //   <form
-              //     id="form"
-              //     className="s1StartBtnForm"
-              //     action="/Simulation1"
-              //   >
-              //     <button className="s1card">
-              //       {/* <img src={juicy_business} alt="Avatar" className="s1Image" /> */}
-              //       <div className="s1Selection">
-              //         <h1 className="s1Title">Simulation 1</h1>
-
-              //         {/* <div className="s1StartButton">
-              //                               <input className="s1StartText" type="submit"  value=">"></input>
-              //                           </div> */}
-              //       </div>
-              //     </button>
-              //   </form>
-              //   <form
-              //     id="form"
-              //     className="s1StartBtnForm"
-              //     action="/Evaluation1"
-              //   >
-              //     <button className="e1card">
-              //       {/* <img src={juicy_business} alt="Avatar" className="s1Image" /> */}
-              //       <div className="s1Selection">
-              //         <h1 className="s1Title">Evaluation 1</h1>
-
-              //         {/* <div className="s1StartButton">
-              //                               <input className="s1StartText" type="submit" value=">"></input>
-              //                           </div> */}
-              //       </div>
-              //     </button>
-              //   </form>
-              //   <form
-              //     id="form"
-              //     className="s1StartBtnForm"
-              //     action="/Simulation2"
-              //   >
-              //     <button className="s2card">
-              //       {/* <img src={juicy_business} alt="Avatar" className="s1Image" /> */}
-              //       <div className="s1Selection">
-              //         <h1 className="s1Title">Simulation 2</h1>
-
-              //         {/* <div className="s1StartButton">
-              //                               <input className="s1StartText" type="submit" value=">"></input>
-              //                           </div> */}
-              //       </div>
-              //     </button>
-              //   </form>
-              //   <form
-              //     id="form"
-              //     className="s1StartBtnForm"
-              //     action="/Evaluation2"
-              //   >
-              //     <button className="e2card">
-              //       {/* <img src={juicy_business} alt="Avatar" className="s1Image" /> */}
-              //       <div className="s1Selection">
-              //         <h1 className="s1Title">Evaluation 2</h1>
-
-              //         {/* <div className="s1StartButton">
-              //                                   <input className="s1StartText" type="submit" value=">"></input>
-              //                               </div> */}
-              //       </div>
-              //     </button>
-              //   </form>
-              // </div>
               <BIMenus bnumber={bNum} />
             )}
           </div>
