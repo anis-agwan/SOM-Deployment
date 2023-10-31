@@ -331,7 +331,7 @@ function SidePanel() {
   };
 
   const getBIData = async () => {
-    const baseURL = "http://localhost:8448/bbim/bi/getScores";
+    const baseURL = "http://3.14.159.174:8448/bbim/bi/getScores";
     try {
       const response = await axios.get(`${baseURL}/${bNum}`);
       // console.log(response.data);
@@ -362,6 +362,8 @@ function SidePanel() {
     await getBIData().then((res) => {
       setBIData(res);
     });
+
+    await getUserDets(bNum);
 
     // setPBData(pb);
 
@@ -525,6 +527,7 @@ function SidePanel() {
                           ctData={ctData}
                           ddData={ddData}
                           biData={biData}
+                          studentInfo={student}
                         />
                       }
                       fileName={`${bNum} + "_MBA_Assessment_Report`}

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import {
@@ -109,12 +109,24 @@ const styles = StyleSheet.create({
   },
 });
 
-const PdfV01 = ({ bNum, pbData, ctData, ddData, biData }) => {
+const PdfV01 = ({ bNum, pbData, ctData, ddData, biData, studentInfo }) => {
   console.log(bNum);
-  console.log(pbData);
-  console.log(ctData);
+  // console.log(pbData);
+  // console.log(ctData);
   console.log(ddData);
   console.log(biData);
+  console.log(studentInfo);
+
+  const [todayDate, setTodayDate] = useState(new Date());
+  const [monthName, setMonthName] = useState();
+  // const
+
+  useEffect(() => {
+    const month = todayDate.toLocaleString("default", { month: "long" });
+
+    console.log(month);
+    setMonthName(month);
+  });
 
   return (
     //Comment PDFViwer when not in use
@@ -135,82 +147,171 @@ const PdfV01 = ({ bNum, pbData, ctData, ddData, biData }) => {
           />
         </Svg>
         <Text style={styles.sname}>
-          Smith Alex <Text style={styles.bNumber}> ( B00123456 )</Text>
+          {studentInfo.firstName} {studentInfo.lastName}
+          <Text style={styles.bNumber}> ( {bNum} )</Text>
         </Text>
-        <Text style={styles.date}>JULY 31, 2023</Text>
+        <Text
+          style={styles.date}
+        >{`${monthName} ${todayDate.getDate()}, ${todayDate.getFullYear()}`}</Text>
         <Image style={styles.bIcon} src={BIcon} fixed></Image>
-        <Text style={styles.Score}> 08 </Text>
+
+        {/* Personal Beliefs */}
+
+        <Text style={styles.Score}>
+          {Math.floor(pbData.openToChangeScore / 10) === 0
+            ? `0${pbData.openToChangeScore}`
+            : pbData.openToChangeScore}
+        </Text>
+        <Text style={styles.text}>Open to Change/New Ideas </Text>
+        <Text style={styles.comment}>{pbData.openToChangeScoreComment}</Text>
+
+        <Text style={styles.Score}>
+          {Math.floor(pbData.coachingScore / 10) === 0
+            ? `0${pbData.coachingScore}`
+            : pbData.coachingScore}
+        </Text>
+        <Text style={styles.text}>Coaching Behaviors and Beliefs </Text>
+        <Text style={styles.comment}>{pbData.coachingScoreComment}</Text>
+
+        <Text style={styles.Score}>
+          {Math.floor(pbData.empoweringScore / 10) === 0
+            ? `0${pbData.empoweringScore}`
+            : pbData.empoweringScore}
+        </Text>
+        <Text style={styles.text}>Empowerment Beliefs </Text>
+        <Text style={styles.comment}>{pbData.empoweringScoreComment}</Text>
+
+        <Text style={styles.Score}>
+          {Math.floor(pbData.teamworkScore / 10) === 0
+            ? `0${pbData.teamworkScore}`
+            : pbData.teamworkScore}
+        </Text>
+        <Text style={styles.text}>Teamwork Beliefs </Text>
+        <Text style={styles.comment}>{pbData.teamworkScoreComment}</Text>
+
+        <Text style={styles.Score}>
+          {Math.floor(pbData.planningAndOrganizingScore / 10) === 0
+            ? `0${pbData.planningAndOrganizingScore}`
+            : pbData.planningAndOrganizingScore}
+        </Text>
+        <Text style={styles.text}>Planning and Organizing </Text>
+        <Text style={styles.comment}>
+          {pbData.planningAndOrganizingScoreComment}
+        </Text>
+
+        {/* End of PB */}
+
+        {/* Critical Thinking */}
+
+        <Text style={styles.text}>" "</Text>
+
+        <Text style={styles.text}>Little Doubt in CT section</Text>
+
+        <Text style={styles.Score}>
+          {Math.floor(ctData.sec1AnalysisScore / 10) === 0
+            ? `0${ctData.sec1AnalysisScore}`
+            : ctData.sec1AnalysisScore}
+        </Text>
+        <Text style={styles.text}>Analyses Critical Thinking</Text>
+        <Text style={styles.comment}>{ctData.analysesScoreComment}</Text>
+
+        <Text style={styles.Score}>
+          {Math.floor(ctData.sec2ConnectionsScore / 10) === 0
+            ? `0${ctData.sec2ConnectionsScore}`
+            : ctData.sec2ConnectionsScore}
+        </Text>
+        <Text style={styles.text}>Decisiveness Critical Thinking</Text>
+        <Text style={styles.comment}>{ctData.decisivenessScoreComment}</Text>
+
+        <Text style={styles.Score}>
+          {Math.floor(ctData.sec3DepthScore / 10) === 0
+            ? `0${ctData.sec3DepthScore}`
+            : ctData.sec3DepthScore}
+        </Text>
+        <Text style={styles.text}>Logical Reasoning Critical Thinking</Text>
+        <Text style={styles.comment}>
+          {ctData.logicalReasoningScoreComment}
+        </Text>
+
+        {/* End of CT */}
+
+        {/* Difficult Decisions */}
+
+        <Text style={styles.Score}>
+          {Math.floor(ddData.rankScore.convertedRankDecisionScore / 10) === 0
+            ? `0${ddData.rankScore.convertedRankDecisionScore}`
+            : ddData.rankScore.convertedRankDecisionScore}
+        </Text>
+        <Text style={styles.text}>Judgement </Text>
+        <Text style={styles.comment}>
+          {ddData.rankScore.judgementScoreComment}
+        </Text>
+
+        <Text style={styles.Score}>
+          {Math.floor(
+            ddData.rateScore.convertedDesirabilityDecisionsScore / 10
+          ) === 0
+            ? `0${ddData.rateScore.convertedDesirabilityDecisionsScore}`
+            : ddData.rateScore.convertedDesirabilityDecisionsScore}
+        </Text>
+        <Text style={styles.text}>Consideration of Alternatives </Text>
+        <Text style={styles.comment}>
+          {ddData.rateScore.considerationOfAlternativesScoreComment}
+        </Text>
+
+        {/* End of DD */}
+
+        {/* Behavioral Interview */}
+        <Text style={styles.Score}>
+          {Math.floor(biData.biScoreIII / 10) === 0
+            ? `0${biData.biScoreIII}`
+            : biData.biScoreIII}
+        </Text>
         <Text style={styles.text}>Idealized Influence and Inspiration </Text>
-        <Text style={styles.comment}>
-          Vigorously encouraged me (us) to develop my (our) strengths, made many
-          suggestions and proposals and plans for developing my (our) strengths
+        <Text style={styles.comment}>{biData.biCommentIII}</Text>
+
+        <Text style={styles.Score}>
+          {Math.floor(biData.biScoreIS / 10) === 0
+            ? `0${biData.biScoreIS}`
+            : biData.biScoreIS}
         </Text>
-        <Text style={styles.Score}> 04 </Text>
         <Text style={styles.text}>Intellectual Stimulation </Text>
-        <Text style={styles.comment}>
-          Encouraged me (us) somewhat to develop my (our) strengths
+        <Text style={styles.comment}>{biData.biCommentIS}</Text>
+
+        <Text style={styles.Score}>
+          {Math.floor(biData.biScoreIC / 10) === 0
+            ? `0${biData.biScoreIC}`
+            : biData.biScoreIC}
         </Text>
-        <Text style={styles.Score}> 05 </Text>
         <Text style={styles.text}>Individualized Consideration </Text>
-        <Text style={styles.comment}>
-          Showed contempt for my (our) self development, indicated I (we) was
-          (were) incapable of development, said I (we) did not have any
-          strengths, or did not make any mention of my (us) developing my (our)
-          strengths
+        <Text style={styles.comment}>{biData.biCommentIC}</Text>
+
+        <Text style={styles.Score}>
+          {Math.floor(biData.biScoreSR / 10) === 0
+            ? `0${biData.biScoreSR}`
+            : biData.biScoreSR}
         </Text>
+        <Text style={styles.text}>Sharing Responsibility </Text>
+        <Text style={styles.comment}>{biData.biCommentSR}</Text>
+
+        <Text style={styles.Score}>
+          {Math.floor(biData.biScoreSMI / 10) === 0
+            ? `0${biData.biScoreSMI}`
+            : biData.biScoreSMI}
+        </Text>
+        <Text style={styles.text}>Seeking More Information </Text>
+        <Text style={styles.comment}>{biData.biCommentSMI}</Text>
+
+        {/* End of DD */}
+
         <Text style={styles.Score}> 07 </Text>
-        <Text style={styles.text}>Transactional Leadership </Text>
+        <Text style={styles.text}>
+          Transactional Leadership (NEEDS TO BE CHANGED){" "}
+        </Text>
         <Text style={styles.comment}>
           Clearly enjoys change. Solicits new ideas from others and acts on them
           to help produce change.
         </Text>
-        <Text style={styles.Score}> 02 </Text>
-        <Text style={styles.text}>Open to Change/New Ideas </Text>
-        <Text style={styles.comment}>
-          Expressed an interest in trying new things. Considers alternative
-          approaches to or ways of doing things.
-        </Text>
-        <Text style={styles.Score}> 06 </Text>
-        <Text style={styles.text}>Sharing Responsibility </Text>
-        <Text style={styles.comment}>
-          Unwilling to consider alternative approaches or ways of doing things.
-          Prefers to stick with what has worked in the past rather than try new
-          ideas.
-        </Text>
-        <Text style={styles.Score}> 06 </Text>
-        <Text style={styles.text}>Seeking More Information </Text>
-        <Text style={styles.comment}>
-          Unwilling to consider alternative approaches or ways of doing things.
-          Prefers to stick with what has worked in the past rather than try new
-          ideas.
-        </Text>
-        <Text style={styles.Score}> 07 </Text>
-        <Text style={styles.text}>Logical Reasoning </Text>
-        <Text style={styles.comment}>comment................</Text>
-        <Text style={styles.Score}> 09 </Text>
-        <Text style={styles.text}>Decisiveness </Text>
-        <Text style={styles.comment}>comment................</Text>
-        <Text style={styles.Score}> 10 </Text>
-        <Text style={styles.text}>Judgement </Text>
-        <Text style={styles.comment}>comment................</Text>
-        <Text style={styles.Score}> 03 </Text>
-        <Text style={styles.text}>Consideration of Alternatives </Text>
-        <Text style={styles.comment}>comment................</Text>
-        <Text style={styles.Score}> 06 </Text>
-        <Text style={styles.text}>Analyses </Text>
-        <Text style={styles.comment}>comment................</Text>
-        <Text style={styles.Score}> 07 </Text>
-        <Text style={styles.text}>Coaching Behaviors and Beliefs </Text>
-        <Text style={styles.comment}>comment................</Text>
-        <Text style={styles.Score}> 04 </Text>
-        <Text style={styles.text}>Teamwork Beliefs </Text>
-        <Text style={styles.comment}>comment................</Text>
-        <Text style={styles.Score}> 08 </Text>
-        <Text style={styles.text}>Empowerment Beliefs </Text>
-        <Text style={styles.comment}>comment................</Text>
-        <Text style={styles.Score}> 10 </Text>
-        <Text style={styles.text}>Planning and Organizing </Text>
-        <Text style={styles.comment}>comment................</Text>
 
         <Text
           style={styles.pageNumber}

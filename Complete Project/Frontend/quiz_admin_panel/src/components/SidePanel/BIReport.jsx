@@ -37,7 +37,7 @@ export const BIReport = (props) => {
   ]);
   const [addComData, setAddCommData] = useState([]);
   const [isLoading, setLoading] = useState(false);
-  const baseURL = "http://localhost:8448/bbim/bi/getScores";
+  const baseURL = "http://3.14.159.174:8448/bbim/bi/getScores";
 
   const getCTScoreHandler = async () => {
     try {
@@ -99,7 +99,7 @@ export const BIReport = (props) => {
         },
       });
 
-      console.log(biData.Data);
+      // console.log(biData.Data);
 
       setLoading(true);
     } catch (err) {
