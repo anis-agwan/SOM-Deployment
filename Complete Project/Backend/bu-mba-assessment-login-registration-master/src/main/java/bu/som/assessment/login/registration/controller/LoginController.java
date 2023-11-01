@@ -85,9 +85,7 @@ public class LoginController {
     public String genToken(@RequestBody ForgotPasswordDTO forgotPasswordDTO) {
         System.out.println(forgotPasswordDTO);
         try {
-            UserDetails user = loginService.checkUserExists(forgotPasswordDTO.getEmail());
 
-            System.out.println(user);
             return loginService.generateToken(forgotPasswordDTO.getEmail());
 
         } catch (Exception err) {

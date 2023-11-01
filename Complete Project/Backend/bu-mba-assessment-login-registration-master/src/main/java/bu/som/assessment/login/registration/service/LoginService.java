@@ -78,14 +78,23 @@ public class LoginService {
 
     public String generateToken(String email) {
         String token = new String();
-
+        UserDetails user = repository.findByEmailId(email);
+        System.out.println(user.getPassword());
         if(repository.existsById(email)) {
 //            UserDetails res = repository.findByEmailId(email);
+            System.out.println("TIll here");
+            System.out.println("Password here");
+            UserDetails user1 = repository.findByEmailId(email);
+            System.out.println(user.getPassword());
             TempToken tempToken = new TempToken();
             tempToken.setEmailId(email);
             token = getSaltString();
             tempToken.setToken(token);
             tempTokenRepository.save(tempToken);
+
+            System.out.println("After token Password here");
+            UserDetails user2 = repository.findByEmailId(email);
+            System.out.println(user.getPassword());
 
             EmailDetails emailDetails = new EmailDetails();
             emailDetails.setRecipient(email);
@@ -101,7 +110,6 @@ public class LoginService {
     }
 
     public ForgotPassResponseDTO confirmToken(String email, String token) {
-        String text = new String();
         ForgotPassResponseDTO responseDTO = new ForgotPassResponseDTO();
         if(repository.existsById(email)) {
             UserDetails res = repository.findByEmailId(email);
@@ -128,12 +136,7 @@ public class LoginService {
     }
 
     public ForgotPassResponseDTO newPassword(String email, String password) {
-//        System.out.println("EMAIL: "+ email);
-//        UserDetails res = repository.findByEmailId(email);
-////        System.out.println(res);
-//        res.setPassword(password);
-//        repository.save(res);
-//        return "Password Changed successfully";
+
         ForgotPassResponseDTO responseDTO = new ForgotPassResponseDTO();
         if(repository.existsById(email)) {
             UserDetails res = repository.findByEmailId(email);
