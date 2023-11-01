@@ -129,6 +129,9 @@ export default function ForgotPassword() {
           console.log(response);
         }
       });
+    } else {
+      // console.log("NO evalid email");
+      alert("Please check your email whether its correct or not.");
     }
   };
 
@@ -171,6 +174,8 @@ export default function ForgotPassword() {
             setGenerateToken(false);
           }
         });
+    } else {
+      alert("Please enter correct email and token.");
     }
   };
   const [GenerateTokenShow, setGenerateToken] = useState(true);
@@ -194,7 +199,7 @@ export default function ForgotPassword() {
         <p className="FPheadText">Welcome to Leadership Assesment Program</p>
         {GenerateTokenShow && (
           <>
-            <form id="loginForm" action={showNewPassPage}>
+            <div id="loginForm" onClick={showNewPassPage}>
               <label htmlFor="email" className="userName">
                 B-mail
               </label>
@@ -218,8 +223,8 @@ export default function ForgotPassword() {
                   <p className="GenerateTokenText">Generate Token</p>
                 </button>
               </div>
-            </form>
-            <form id="loginForm">
+            </div>
+            <div id="loginForm">
               <label htmlFor="password" className="TokenLabel">
                 Token {"(12-digit)"}
               </label>
@@ -242,12 +247,12 @@ export default function ForgotPassword() {
                   onClick={showNewPassPage}
                 ></input>
               </div>
-            </form>
+            </div>
           </>
         )}
         {NewPassPageShow && (
           <>
-            <form action="/">
+            <div>
               <label htmlFor="password" className="password1">
                 Password
               </label>
@@ -285,7 +290,7 @@ export default function ForgotPassword() {
                   onClick={newPassSubmitBtnHandler}
                 ></input>
               </div>
-            </form>
+            </div>
           </>
         )}
 

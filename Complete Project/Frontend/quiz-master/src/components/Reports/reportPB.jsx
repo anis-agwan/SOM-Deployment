@@ -24,6 +24,7 @@ ChartJS.register(
 
 export const ReportPB = () => {
   const [pbData, setPBData] = useState({ Data: {}, comments: {} });
+  const [showReport, setShowReport] = useState(false);
   const [commentsData, setCommentsData] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const user = JSON.parse(localStorage.getItem("userDetails"));
@@ -31,6 +32,14 @@ export const ReportPB = () => {
   const getPBScoreHandler = async () => {
     try {
       const response = await axios.get(`${baseURL}/${user.bingNumber}`);
+
+      if (response.data !== "") {
+        setShowReport(true);
+      } else {
+        return;
+      }
+
+      // console.log("SHOW: ", showReport);
 
       const scoreArr = [
         response.data.openToChangeScore,
@@ -125,7 +134,7 @@ export const ReportPB = () => {
     setLoading(false);
     getPBScoreHandler();
     setLoading(true);
-  }, []);
+  }, [showReport]);
   const myPBLabel = [
     "Open to Change",
     "Coaching",
@@ -137,27 +146,33 @@ export const ReportPB = () => {
     <>
       {/* <h1>PB COMP</h1>
       <h1>{user.bingNumber}</h1> */}
-      <div className="PB-report-map">
-        {isLoading && Object.keys(pbData.Data).length > 0 && (
-          <div className="PB-report-data">
-            <Radar data={pbData.Data} options={config}></Radar>
+      {showReport ? (
+        <div className="PB-report-map">
+          {isLoading && Object.keys(pbData.Data).length > 0 && (
+            <div className="PB-report-data">
+              <Radar data={pbData.Data} options={config}></Radar>
 
-            {commentsData.map((val, idx) => {
-              console.log(val);
-              return (
-                <div key={idx}>
-                  {" "}
-                  <ul>
-                    <li>
-                      <b>{myPBLabel[idx]} :</b> {val}
-                    </li>
-                  </ul>
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </div>
+              {commentsData.map((val, idx) => {
+                // console.log(val);
+                return (
+                  <div key={idx}>
+                    {" "}
+                    <ul>
+                      <li>
+                        <b>{myPBLabel[idx]} :</b> {val}
+                      </li>
+                    </ul>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className="PB-report-map">
+          <h1 className="PB-report-data">No data</h1>
+        </div>
+      )}
     </>
   );
 };

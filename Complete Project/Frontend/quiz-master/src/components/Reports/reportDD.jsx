@@ -15,9 +15,6 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
-import { Pie } from "react-chartjs-2";
-import { splitStringAfterEightWords } from "./split";
-
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export const data = {
@@ -48,6 +45,7 @@ export const ReportDD = () => {
   const [rateDDData, setRateDDData] = useState({ Data: {} });
   const [commentsData, setCommentsData] = useState([]);
   const [rateComments, setRateComments] = useState([]);
+  const [showReport, setShowReport] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const baseRankURL = "http://3.14.159.174:8443/situation_q/sq/getRankScores";
   const baseRateURL = "http://3.14.159.174:8443/situation_q/sq/getRateScores";
@@ -56,6 +54,12 @@ export const ReportDD = () => {
     try {
       const response1 = await axios.get(`${baseRankURL}/${user.bingNumber}`);
       const response2 = await axios.get(`${baseRateURL}/${user.bingNumber}`);
+
+      if ((response1.data && response2.data) !== "") {
+        setShowReport(true);
+      } else {
+        return;
+      }
 
       const rateDD = [
         response2.data.convertedDesirabilityDecisionsScore,
@@ -159,7 +163,7 @@ export const ReportDD = () => {
     setLoading(false);
     getDDScoreHandler();
     setLoading(true);
-  }, []);
+  }, [showReport]);
 
   const myDDLabel = [
     "Judgement Score Comment",
@@ -168,52 +172,58 @@ export const ReportDD = () => {
 
   return (
     <>
-      <div className="PB-report-map">
-        {isLoading &&
-          Object.keys(ddData.Data).length > 0 &&
-          Object.keys(rateDDData.Data).length > 0 && (
-            <div className="PB-report-data">
-              <Bar data={ddData.Data} options={config} />
-              <h5>Rank Decisions</h5>{" "}
-              {commentsData.map((val, idx) => {
-                //   console.log(val);
-                return (
-                  <div key={idx}>
-                    {" "}
-                    <ul>
-                      <li>
-                        <b>{myDDLabel[0]} :</b> {val}
-                      </li>
-                    </ul>
-                  </div>
-                );
-              })}
-              <h5>Desirability Decisions</h5>{" "}
-              {rateComments.map((val, idx) => {
-                //   console.log(val);
-                return (
-                  <div key={idx}>
-                    {" "}
-                    <ul>
-                      <li>
-                        <b>{myDDLabel[1]} :</b> {val}
-                      </li>
-                    </ul>
-                  </div>
-                );
-              })}
-            </div>
-            // <>
-            //   <div className="PB-report-data">
-            //     <Pie data={ddData.Data} />
-            //     <div>Jugdement Score Comment</div>
-            //     <div>{commentsData[0]}</div>
-            //     <Pie data={rateDDData.Data} />
-            //     <div>{rateComments[0]}</div>
-            //   </div>
-            // </>
-          )}
-      </div>
+      {showReport ? (
+        <div className="PB-report-map">
+          {isLoading &&
+            Object.keys(ddData.Data).length > 0 &&
+            Object.keys(rateDDData.Data).length > 0 && (
+              <div className="PB-report-data">
+                <Bar data={ddData.Data} options={config} />
+                <h5>Rank Decisions</h5>{" "}
+                {commentsData.map((val, idx) => {
+                  //   console.log(val);
+                  return (
+                    <div key={idx}>
+                      {" "}
+                      <ul>
+                        <li>
+                          <b>{myDDLabel[0]} :</b> {val}
+                        </li>
+                      </ul>
+                    </div>
+                  );
+                })}
+                <h5>Desirability Decisions</h5>{" "}
+                {rateComments.map((val, idx) => {
+                  //   console.log(val);
+                  return (
+                    <div key={idx}>
+                      {" "}
+                      <ul>
+                        <li>
+                          <b>{myDDLabel[1]} :</b> {val}
+                        </li>
+                      </ul>
+                    </div>
+                  );
+                })}
+              </div>
+              // <>
+              //   <div className="PB-report-data">
+              //     <Pie data={ddData.Data} />
+              //     <div>Jugdement Score Comment</div>
+              //     <div>{commentsData[0]}</div>
+              //     <Pie data={rateDDData.Data} />
+              //     <div>{rateComments[0]}</div>
+              //   </div>
+              // </>
+            )}
+        </div>
+      ) : (
+        <div className="PB-report-map">
+          <h1 className="PB-report-data">No data</h1>
+        </div>
+      )}
     </>
   );
 };

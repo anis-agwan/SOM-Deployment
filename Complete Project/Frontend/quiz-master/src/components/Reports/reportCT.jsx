@@ -25,14 +25,11 @@ ChartJS.register(
 );
 
 export const ReportCT = () => {
-  const sentence =
-    "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
-  const result = splitStringAfterEightWords(sentence);
-  console.log(result);
   const user = JSON.parse(localStorage.getItem("userDetails"));
   const [ctData, setCTData] = useState({ Data: {} });
   const [commentsData, setCommentsData] = useState([]);
   const [addComData, setAddCommData] = useState([]);
+  const [showReport, setShowReport] = useState(false);
   let cc = [["Analyses Score", "Connections Score", "Depth Score"]];
   const [isLoading, setLoading] = useState(false);
   const baseURL =
@@ -41,6 +38,12 @@ export const ReportCT = () => {
   const getCTScoreHandler = async () => {
     try {
       const response = await axios.get(`${baseURL}/${user.bingNumber}`);
+
+      if (response.data !== "") {
+        setShowReport(true);
+      } else {
+        return;
+      }
 
       const ct = [
         response.data.sec1AnalysisScore,
@@ -123,26 +126,32 @@ export const ReportCT = () => {
 
   return (
     <>
-      <div className="PB-report-map">
-        {isLoading && Object.keys(ctData.Data).length > 0 && (
-          <div className="PB-report-data">
-            <Bar data={ctData.Data} options={config} />
-            {addComData.map((val, idx) => {
-              //   console.log(val);
-              return (
-                <div key={idx}>
-                  {" "}
-                  <ul>
-                    <li>
-                      <b>{myCTLabel[idx]} :</b> {val}
-                    </li>
-                  </ul>
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </div>
+      {showReport ? (
+        <div className="PB-report-map">
+          {isLoading && Object.keys(ctData.Data).length > 0 && (
+            <div className="PB-report-data">
+              <Bar data={ctData.Data} options={config} />
+              {addComData.map((val, idx) => {
+                //   console.log(val);
+                return (
+                  <div key={idx}>
+                    {" "}
+                    <ul>
+                      <li>
+                        <b>{myCTLabel[idx]} :</b> {val}
+                      </li>
+                    </ul>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className="PB-report-map">
+          <h1 className="PB-report-data">No data</h1>
+        </div>
+      )}
     </>
   );
 };
