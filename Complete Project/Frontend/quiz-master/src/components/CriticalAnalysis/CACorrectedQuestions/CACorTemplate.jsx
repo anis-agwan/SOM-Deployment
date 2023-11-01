@@ -24,7 +24,7 @@ export const CACorTemplate = (props) => {
     const url =
       "http://3.14.159.174:8442/critical-thinking/critical-thinking/ctData";
 
-    const statsurl = `http://localhost:8080/login-register/login/updatestats`;
+    const statsurl = `http://3.13.110.40:8080/login-register/login/updatestats`;
 
     await axios
       .post(statsurl, {

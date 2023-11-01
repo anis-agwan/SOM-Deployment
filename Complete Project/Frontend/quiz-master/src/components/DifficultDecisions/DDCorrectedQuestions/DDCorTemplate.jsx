@@ -128,7 +128,7 @@ export const DDCorTemplate = (props) => {
 
   const routeChange = async (event) => {
     const url = "http://3.14.159.174:8443/situation_q/sq/sqData";
-    const statsurl = `http://localhost:8080/login-register/login/updatestats`;
+    const statsurl = `http://3.13.110.40:8080/login-register/login/updatestats`;
 
     await axios
       .post(statsurl, {
