@@ -119,4 +119,10 @@ public class LoginController {
         String newPassword = details.get("newPassword");
         return loginService.newPassword(email, newPassword);
     }
+
+    @PostMapping("updatestats")
+    public void updateTimeStats(@RequestBody HashMap<String, String> emailMap) {
+        String email = emailMap.get("email");
+        loginService.updateStudentStats(email);
+    }
 }

@@ -4,11 +4,15 @@ import bu.som.assessment.login.registration.Dto.ExistingUserDto;
 import bu.som.assessment.login.registration.Dto.ForgotPassResponseDTO;
 import bu.som.assessment.login.registration.Dto.LoginResponseDto;
 import bu.som.assessment.login.registration.entity.EmailDetails;
+import bu.som.assessment.login.registration.entity.TempToken;
 import bu.som.assessment.login.registration.entity.UserDetails;
+import bu.som.assessment.login.registration.repository.TempTokenRepository;
 import bu.som.assessment.login.registration.repository.UserDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Optional;
 import java.util.Random;
 
@@ -17,6 +21,9 @@ public class LoginService {
 
     @Autowired
     private UserDetailsRepository repository;
+
+    @Autowired
+    TempTokenRepository tempTokenRepository;
 
     @Autowired
     private EmailServiceImpl emailService;
@@ -73,10 +80,12 @@ public class LoginService {
         String token = new String();
 
         if(repository.existsById(email)) {
-            UserDetails res = repository.findByEmailId(email);
+//            UserDetails res = repository.findByEmailId(email);
+            TempToken tempToken = new TempToken();
+            tempToken.setEmailId(email);
             token = getSaltString();
-            res.setToken(token);
-            repository.save(res);
+            tempToken.setToken(token);
+            tempTokenRepository.save(tempToken);
 
             EmailDetails emailDetails = new EmailDetails();
             emailDetails.setRecipient(email);
@@ -96,7 +105,8 @@ public class LoginService {
         ForgotPassResponseDTO responseDTO = new ForgotPassResponseDTO();
         if(repository.existsById(email)) {
             UserDetails res = repository.findByEmailId(email);
-            if(res.getToken().equals(token)) {
+            TempToken tempToken = tempTokenRepository.findByEmailId(email);
+            if(tempToken.getToken().equals(token)) {
                 responseDTO.setEmail(email);
                 responseDTO.setIsValid(true);
                 responseDTO.setMessage("Token matches with the secret token");
@@ -128,8 +138,8 @@ public class LoginService {
         if(repository.existsById(email)) {
             UserDetails res = repository.findByEmailId(email);
             res.setPassword(password);
-            res.setToken(null);
             repository.save(res);
+            tempTokenRepository.deleteById(email);
             responseDTO.setEmail(email);
             responseDTO.setIsValid(true);
             responseDTO.setMessage("Password changed successfully");
@@ -141,6 +151,16 @@ public class LoginService {
             responseDTO.setMessage("Error While changing password");
             responseDTO.setStatus(404);
             return responseDTO;
+        }
+    }
+
+    public void updateStudentStats(String email) {
+        if(repository.existsById(email)) {
+            UserDetails student = repository.findByEmailId(email);
+            LocalDateTime time = LocalDateTime.now(ZoneId.of("America/New_York"));
+            student.setUpdateStatusCode(time);
+            System.out.println(student);
+            repository.save(student);
         }
     }
 
