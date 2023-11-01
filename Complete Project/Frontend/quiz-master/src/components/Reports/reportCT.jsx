@@ -120,7 +120,7 @@ export const ReportCT = () => {
     setLoading(false);
     getCTScoreHandler();
     setLoading(true);
-  }, []);
+  }, [showReport]);
 
   const myCTLabel = ["Decisive Score", "Logical Reasoning", "Analyses"];
 
