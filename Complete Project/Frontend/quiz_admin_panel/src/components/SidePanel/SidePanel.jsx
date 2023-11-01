@@ -15,6 +15,7 @@ import BIMenus from "./BIMenus";
 
 function SidePanel() {
   let navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("userDetails"));
 
   const [Dashactive, setDashActive] = useState(true);
   const [PBactive, setPBActive] = useState(false);
@@ -423,7 +424,9 @@ function SidePanel() {
           <h4 className="AdminPanelTitleText">ADMIN PANEL</h4>
         </div>
         <div className="UserNameTitle">
-          <h2 className="UserNameTitleText">User Name</h2>
+          <h2 className="UserNameTitleText">
+            {user.firstName + " " + user.lastName}
+          </h2>
         </div>
         <button id="btnClick" onClick={ShowDash} className="BtnContainer">
           <h2

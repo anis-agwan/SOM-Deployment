@@ -5,6 +5,7 @@ import BUuserLogoIconIcon from "../images/UserLogo.png";
 
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../store/auth-context";
+import { USER_ROLE } from "../../enums/role_enums";
 
 let useClickOutside = (handler) => {
   let domNode = useRef();
@@ -23,6 +24,7 @@ let useClickOutside = (handler) => {
 };
 
 function Navbar() {
+  const user = JSON.parse(localStorage.getItem("userDetails"));
   const [openProfile, setOpenProfile] = useState(false);
   const authCtx = useContext(AuthContext);
 
@@ -54,14 +56,30 @@ function Navbar() {
     navigate(path);
   };
 
+  const imgClick = () => {
+    if (authCtx.isLoggedIn) {
+      navigate("/reports");
+    } else {
+      navigate("/", {
+        state: {
+          role: USER_ROLE.FACULTY,
+        },
+      });
+    }
+  };
+
   return (
     <>
       <nav className="NavbarItems">
         <div>
-          <a target="_self" href="/reports" rel="noreferrer">
-            <img src={BUSOMIcon} className="BUSOMImageClass" alt="" />
-          </a>
+          <img
+            src={BUSOMIcon}
+            className="BUSOMImageClass"
+            alt=""
+            onClick={imgClick}
+          />
         </div>
+
         <div ref={domNode}>
           {authCtx.isLoggedIn && (
             <div
@@ -79,7 +97,11 @@ function Navbar() {
 
           <div className={`dropDown ${openProfile ? "active" : "inactive"}`}>
             <div className="menuStyle">
-              <div className="Dropdownlabel">UserName</div>
+              {user && (
+                <div className="Dropdownlabel">
+                  {user.firstName + " " + user.lastName}
+                </div>
+              )}
               <hr></hr>
               {/* <button onClick={profileRoute} className='ProfileBtn' >Profile</button> */}
               <button onClick={dahboardRoute} className="DashboardBtn1">
