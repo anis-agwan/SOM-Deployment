@@ -123,6 +123,10 @@ export default function Login() {
             navigate("/SelectionScreen");
           }
         });
+    } else {
+      alert(
+        "Please check your email and password.\n(Email should only be BU email)"
+      );
     }
   };
 

@@ -44,7 +44,9 @@ export default function Signup() {
         }
       });
     } else {
-      alert("Please Fill the form completely");
+      alert(
+        "Please check and fill the form carefully.\n(Email should only be BU email)"
+      );
     }
   };
   const [SignupPageShow, setSignupPageShow] = useState(true);

@@ -5,6 +5,7 @@ import BUuserLogoIconIcon from "../../images/UserLogo.png";
 
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../store/auth-context";
+import { USER_ROLE } from "../../enums/role_enums";
 
 let useClickOutside = (handler) => {
   let domNode = useRef();
@@ -56,13 +57,31 @@ function Navbar() {
 
   // const ctx = useContext(AuthContext);
 
+  const imgClick = () => {
+    if (authCtx.isLoggedIn) {
+      navigate("/SelectionScreen");
+    } else {
+      navigate("/", {
+        state: {
+          role: USER_ROLE.STUDENT,
+        },
+      });
+    }
+  };
+
   return (
     <>
       <nav className="NavbarItems">
         <div>
-          <a target="_self" href="/SelectionScreen" rel="noreferrer">
+          <img
+            src={BUSOMIcon}
+            className="BUSOMImageClass"
+            alt=""
+            onClick={imgClick}
+          />
+          {/* <a target="_self" href="/SelectionScreen" rel="noreferrer">
             <img src={BUSOMIcon} className="BUSOMImageClass" alt="" />
-          </a>
+          </a> */}
         </div>
 
         <div ref={domNode}>
