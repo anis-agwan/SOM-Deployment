@@ -30,18 +30,19 @@ export const ReportCT = () => {
   const result = splitStringAfterEightWords(sentence);
   console.log(result);
   const user = JSON.parse(localStorage.getItem("userDetails"));
-  const [ddData, setDDData] = useState({ Data: {} });
+  const [ctData, setCTData] = useState({ Data: {} });
   const [commentsData, setCommentsData] = useState([]);
+  const [addComData, setAddCommData] = useState([]);
   let cc = [["Analyses Score", "Connections Score", "Depth Score"]];
   const [isLoading, setLoading] = useState(false);
   const baseURL =
     "http://3.14.159.174:8442/critical-thinking/critical-thinking/getScores";
 
-  const getDDScoreHandler = async () => {
+  const getCTScoreHandler = async () => {
     try {
       const response = await axios.get(`${baseURL}/${user.bingNumber}`);
 
-      const dD = [
+      const ct = [
         response.data.sec1AnalysisScore,
         response.data.sec2ConnectionsScore,
         response.data.sec3DepthScore,
@@ -49,23 +50,25 @@ export const ReportCT = () => {
 
       console.log(Object.keys(response.data));
       console.log(response.data);
-      const comments = [
+      const ctAddComments = [
         response.data.decisivenessScoreComment,
         response.data.logicalReasoningScoreComment,
         response.data.analysesScoreComment,
       ];
-      console.log(comments);
+      // console.log(comments);
+      setAddCommData(ctAddComments);
+
       setLoading(false);
-      setDDData({
+      setCTData({
         Data: {
           labels: ["Section 1", "Section 2", "Section 3"],
           datasets: [
             {
-              label: "Difficult Decisions",
+              label: "Critical Analyses",
               backgroundColor: "rgba(75,192,192,1)",
               borderColor: "rgba(0,0,0,1)",
               borderWidth: 2,
-              data: dD,
+              data: ct,
             },
           ],
           comments: {},
@@ -73,7 +76,7 @@ export const ReportCT = () => {
       });
 
       //   console.log(ddData);
-      setCommentsData(comments);
+      setCommentsData(ctAddComments);
       setLoading(true);
     } catch (err) {
       console.log(err);
@@ -112,14 +115,32 @@ export const ReportCT = () => {
 
   useEffect(() => {
     setLoading(false);
-    getDDScoreHandler();
+    getCTScoreHandler();
     setLoading(true);
   }, []);
+
+  const myCTLabel = ["Decisive Score", "Logical Reasoning", "Analyses"];
+
   return (
     <>
-      <div>
-        {isLoading && Object.keys(ddData.Data).length > 0 && (
-          <Bar data={ddData.Data} options={config} />
+      <div className="PB-report-map">
+        {isLoading && Object.keys(ctData.Data).length > 0 && (
+          <div className="PB-report-data">
+            <Bar data={ctData.Data} options={config} />
+            {addComData.map((val, idx) => {
+              //   console.log(val);
+              return (
+                <div key={idx}>
+                  {" "}
+                  <ul>
+                    <li>
+                      <b>{myCTLabel[idx]} :</b> {val}
+                    </li>
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
         )}
       </div>
     </>
