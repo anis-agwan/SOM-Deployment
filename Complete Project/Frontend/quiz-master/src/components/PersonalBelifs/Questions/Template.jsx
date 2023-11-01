@@ -75,7 +75,7 @@ const Template = (props) => {
         console.log(err);
       });
 
-    axios.post(url, pbAnswers).then((response) => {
+    await axios.post(url, pbAnswers).then((response) => {
       console.log(response);
       let path = `/endScreen`;
       navigate(path);
