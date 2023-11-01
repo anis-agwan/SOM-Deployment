@@ -18,10 +18,24 @@ export const CACorTemplate = (props) => {
     { a: props.que.ansOption3, id: props.que.options[2].idx },
   ];
 
-  const routeChange = (event) => {
+  let userDets = JSON.parse(localStorage.getItem("userDetails"));
+
+  const routeChange = async (event) => {
     const url =
       "http://3.14.159.174:8442/critical-thinking/critical-thinking/ctData";
-    axios.post(url, CAAnswers).then((response) => {
+
+    const statsurl = `http://localhost:8080/login-register/login/updatestats`;
+
+    await axios
+      .post(statsurl, {
+        email: userDets.emailId,
+      })
+      .then((res) => {})
+      .catch((err) => {
+        console.log(err);
+      });
+
+    await axios.post(url, CAAnswers).then((response) => {
       console.log(response);
       let path = `/endScreen`;
       navigate(path);

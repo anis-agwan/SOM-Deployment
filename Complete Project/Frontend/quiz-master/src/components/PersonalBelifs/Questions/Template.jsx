@@ -58,9 +58,23 @@ const Template = (props) => {
   // const user = localStorage.getItem("userDetails");
   let navigate = useNavigate();
 
-  const routeChange = (event) => {
+  let userDets = JSON.parse(localStorage.getItem("userDetails"));
+
+  const routeChange = async (event) => {
     console.log(user.bingNumber);
     const url = "http://3.13.110.40:8441/personal-beliefs/pb/pbData/";
+
+    const statsurl = `http://localhost:8080/login-register/login/updatestats`;
+
+    await axios
+      .post(statsurl, {
+        email: userDets.emailId,
+      })
+      .then((res) => {})
+      .catch((err) => {
+        console.log(err);
+      });
+
     axios.post(url, pbAnswers).then((response) => {
       console.log(response);
       let path = `/endScreen`;

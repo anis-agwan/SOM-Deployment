@@ -20,6 +20,8 @@ const user = JSON.parse(localStorage.getItem("userDetails"));
 
 export const DDCorTemplate = (props) => {
   let navigate = useNavigate();
+  let userDets = JSON.parse(localStorage.getItem("userDetails"));
+
   const [inputs, setInputs] = useState([]);
   const [ratinginputs, setratingInputs] = useState([]);
 
@@ -124,9 +126,20 @@ export const DDCorTemplate = (props) => {
     setDDAnswers({ ...DDAnswers });
   };
 
-  const routeChange = (event) => {
+  const routeChange = async (event) => {
     const url = "http://3.14.159.174:8443/situation_q/sq/sqData";
-    axios.post(url, DDAnswers).then((response) => {
+    const statsurl = `http://localhost:8080/login-register/login/updatestats`;
+
+    await axios
+      .post(statsurl, {
+        email: userDets.emailId,
+      })
+      .then((res) => {})
+      .catch((err) => {
+        console.log(err);
+      });
+
+    await axios.post(url, DDAnswers).then((response) => {
       console.log(response);
       let path = `/endScreen`;
       navigate(path);

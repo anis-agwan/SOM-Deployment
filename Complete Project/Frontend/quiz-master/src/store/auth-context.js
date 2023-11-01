@@ -11,6 +11,7 @@ export const AuthContext = React.createContext({
   onGenerateToken: (email, access) => {},
   onTokenSubmit: (email, token) => {},
   onRegisterNewPassword: (email, newPass) => {},
+  onUpdateStats: (email) => {},
 });
 
 export const AuthContextProvider = (props) => {
@@ -259,6 +260,20 @@ export const AuthContextProvider = (props) => {
     return registeredValid;
   };
 
+  const updateStats = async (email) => {
+    const url = `${baseURL}login/updatestats`;
+    const user = {
+      email: email,
+    };
+
+    await axios
+      .post(url, user)
+      .then((res) => {})
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -269,6 +284,7 @@ export const AuthContextProvider = (props) => {
         onGenerateToken: generateTokenHandler,
         onTokenSubmit: tokenSubmitHandler,
         onRegisterNewPassword: registerNewPassword,
+        onUpdateStats: updateStats,
       }}
     >
       {props.children}

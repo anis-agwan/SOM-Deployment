@@ -64,6 +64,7 @@ function Navbar() {
             <img src={BUSOMIcon} className="BUSOMImageClass" alt="" />
           </a>
         </div>
+
         <div ref={domNode}>
           {authCtx.isLoggedIn && (
             <div
@@ -71,7 +72,6 @@ function Navbar() {
                 setOpenProfile(!openProfile);
               }}
             >
-              {user && <p>{user.firstName + " " + user.lastName}</p>}
               <img
                 src={BUuserLogoIconIcon}
                 className="BUuserLogoImageClass"
