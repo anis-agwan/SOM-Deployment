@@ -119,8 +119,11 @@ export default function ForgotPassword() {
       authCtx.onGenerateToken(userNameState.value).then((response) => {
         if (response !== "") {
           console.log(response);
+          alert("Token was sent to your email address.");
         }
       });
+    } else {
+      alert("Please check your email whether its correct or not");
     }
   };
 
@@ -190,6 +193,8 @@ export default function ForgotPassword() {
             setGenerateToken(false);
           }
         });
+    } else {
+      alert("Please enter correct email and token");
     }
   };
   const [GenerateTokenShow, setGenerateToken] = useState(true);
