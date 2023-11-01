@@ -270,7 +270,7 @@ const Evaluation2 = () => {
     // });
   };
 
-  const baseURL = "http://localhost:8448/bbim/bi/";
+  const baseURL = "http://3.14.159.174:8448/bbim/bi/";
 
   const submitSimEval1 = async () => {
     const url = `${baseURL}biEvaluation1Data`;

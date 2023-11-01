@@ -138,7 +138,6 @@ function SidePanel() {
     setDDActive(true);
     setBIActive(false);
     setSRActive(false);
-    setBIStudentFormShow(false);
     setBIGraphShow(false);
   };
 
@@ -782,7 +781,6 @@ function SidePanel() {
             )}
           </div>
         )}
-
         {SRShow && (
           <div>
             <form action="/SRReports">

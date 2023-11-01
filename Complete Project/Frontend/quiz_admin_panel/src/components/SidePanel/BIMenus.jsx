@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const BIMenus = ({ bnumber }) => {
-  console.log(bnumber);
+  // console.log(bnumber);
   const [questionsList, setQuestionsList] = useState([]);
   const [simulationQuestions, setSimulationQuestions] = useState([]);
   const [evaluationQuestions, setEvaluationQuestions] = useState([]);
@@ -14,7 +14,7 @@ const BIMenus = ({ bnumber }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const baseUrl = "http://localhost:8448/bbim/bi/";
+    const baseUrl = "http://3.14.159.174:8448/bbim/bi/";
     const url = `${baseUrl}getQuestions`;
     setIsLoading(true);
     const fetchQuestions = async () => {
