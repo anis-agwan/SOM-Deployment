@@ -127,6 +127,7 @@ export default function ForgotPassword() {
       authCtx.onGenerateToken(userNameState.value).then((response) => {
         if (response !== "") {
           console.log(response);
+          alert("Token was sent to your email address.");
         }
       });
     } else {
