@@ -57,16 +57,22 @@ export const ReportDD = () => {
       const response1 = await axios.get(`${baseRankURL}/${user.bingNumber}`);
       const response2 = await axios.get(`${baseRateURL}/${user.bingNumber}`);
 
-      const dD = [
-        response1.data.convertedRankDecisionScore,
-        10 - response1.data.convertedRankDecisionScore,
-      ];
-      const comments = [response1.data.judgementScoreComment];
-
       const rateDD = [
         response2.data.convertedDesirabilityDecisionsScore,
         10 - response2.data.convertedDesirabilityDecisionsScore,
       ];
+
+      const rankDD = [
+        response1.data.rankDecisionScore,
+        response1.data.convertedRankDecisionScore,
+      ];
+
+      const desireDD = [
+        response2.data.desirabilityDecisionsScore,
+        response2.data.convertedDesirabilityDecisionsScore,
+      ];
+
+      const comments = [response1.data.judgementScoreComment];
 
       const rateCom = [response2.data.considerationOfAlternativesScoreComment];
       // console.log(Object.keys(response.data));
@@ -74,17 +80,21 @@ export const ReportDD = () => {
       setLoading(false);
       setDDData({
         Data: {
-          labels: ["Rank Decision"],
+          labels: ["Decision Scores", "Converted Decision Scores"],
           datasets: [
             {
-              label: "Difficult Decisions",
-              backgroundColor: [
-                "rgba(255, 99, 132, 0.2)",
-                "rgba(54, 162, 235, 0.2)",
-              ],
-              borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"],
+              label: "Rank Decision",
+              backgroundColor: "rgba(255, 99, 132, 0.2)",
+              borderColor: "rgba(255, 99, 132, 1)",
               borderWidth: 2,
-              data: dD,
+              data: rankDD,
+            },
+            {
+              label: "Desirability Decision",
+              backgroundColor: "rgba(54, 162, 235, 0.2)",
+              borderColor: "rgba(54, 162, 235, 1)",
+              borderWidth: 2,
+              data: desireDD,
             },
           ],
         },
@@ -118,7 +128,7 @@ export const ReportDD = () => {
   const config = {
     scale: {
       beginAtZero: true,
-      max: 10,
+      max: 20,
       min: 0,
       stepSize: 1,
     },
@@ -135,10 +145,10 @@ export const ReportDD = () => {
             // console.log(data.datasets);
             // console.log(commentsData[context.dataIndex]);
             // const arr = commentsData[context.dataIndex].split(". ");
-            const arr = splitStringAfterEightWords(
-              commentsData[context.dataIndex]
-            );
-            return arr;
+            // const arr = splitStringAfterEightWords(
+            //   commentsData[context.dataIndex]
+            // );
+            // return arr;
           },
         },
       },
@@ -151,20 +161,57 @@ export const ReportDD = () => {
     setLoading(true);
   }, []);
 
+  const myDDLabel = [
+    "Judgement Score Comment",
+    "Consideration of Alternatives Score Comment",
+  ];
+
   return (
     <>
-      <div>
+      <div className="PB-report-map">
         {isLoading &&
           Object.keys(ddData.Data).length > 0 &&
           Object.keys(rateDDData.Data).length > 0 && (
-            // <Bar data={ddData.Data} options={config} />
-            <>
-              <Pie data={ddData.Data} />
-              <div>Jugdement Score Comment</div>
-              <div>{commentsData[0]}</div>
-              <Pie data={rateDDData.Data} />
-              <div>{rateComments[0]}</div>
-            </>
+            <div className="PB-report-data">
+              <Bar data={ddData.Data} options={config} />
+              <h5>Rank Decisions</h5>{" "}
+              {commentsData.map((val, idx) => {
+                //   console.log(val);
+                return (
+                  <div key={idx}>
+                    {" "}
+                    <ul>
+                      <li>
+                        <b>{myDDLabel[0]} :</b> {val}
+                      </li>
+                    </ul>
+                  </div>
+                );
+              })}
+              <h5>Desirability Decisions</h5>{" "}
+              {rateComments.map((val, idx) => {
+                //   console.log(val);
+                return (
+                  <div key={idx}>
+                    {" "}
+                    <ul>
+                      <li>
+                        <b>{myDDLabel[1]} :</b> {val}
+                      </li>
+                    </ul>
+                  </div>
+                );
+              })}
+            </div>
+            // <>
+            //   <div className="PB-report-data">
+            //     <Pie data={ddData.Data} />
+            //     <div>Jugdement Score Comment</div>
+            //     <div>{commentsData[0]}</div>
+            //     <Pie data={rateDDData.Data} />
+            //     <div>{rateComments[0]}</div>
+            //   </div>
+            // </>
           )}
       </div>
     </>
