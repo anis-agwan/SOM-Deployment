@@ -353,7 +353,7 @@ function SidePanel() {
   const getAllStudents = async () => {
     setIsDataLoading(true);
 
-    const baseUrl = "http://localhost:8080/login-register/login";
+    const baseUrl = "http://3.13.110.40:8080/login-register/login";
 
     await axios
       .get(`${baseUrl}/getcomplete`)
