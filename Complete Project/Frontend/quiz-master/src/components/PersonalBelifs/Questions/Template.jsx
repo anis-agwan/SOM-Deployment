@@ -15,6 +15,9 @@ import "./QuesStyles.css";
 import "./Ques";
 import { linearProgressClasses } from "@mui/material/LinearProgress";
 import { styled } from "@mui/material/styles";
+import { AuthContext } from "../../../store/auth-context";
+import { useContext } from "react";
+import { SECTION } from "../../../enums/section_enums";
 
 function LinearProgressWithLabel(props) {
   return (
@@ -57,6 +60,7 @@ const Template = (props) => {
   // console.log(props.question.quesDesc);
   // const user = localStorage.getItem("userDetails");
   let navigate = useNavigate();
+  const authCtx = useContext(AuthContext);
 
   let userDets = JSON.parse(localStorage.getItem("userDetails"));
 
@@ -64,12 +68,13 @@ const Template = (props) => {
     console.log(user.bingNumber);
     const url = "http://3.13.110.40:8441/personal-beliefs/pb/pbData/";
 
-    const statsurl = `http://3.13.110.40:8080/login-register/login/updatestats`;
+    // const statsurl = `http://3.13.110.40:8080/login-register/login/updatestats`;
+    const statsurl = `http://localhost:8080/login-register/login/updatestats`;
 
-    await axios
-      .post(statsurl, {
-        email: userDets.emailId,
-      })
+    console.log("SEC: ", SECTION.PB);
+
+    await authCtx
+      .onUpdateStats(userDets.emailId, SECTION.PB)
       .then((res) => {})
       .catch((err) => {
         console.log(err);

@@ -11,13 +11,13 @@ export const AuthContext = React.createContext({
   onGenerateToken: (email, access) => {},
   onTokenSubmit: (email, token) => {},
   onRegisterNewPassword: (email, newPass) => {},
-  onUpdateStats: (email) => {},
+  onUpdateStats: (email, section) => {},
 });
 
 export const AuthContextProvider = (props) => {
-  const baseURL = "http://3.13.110.40:8080/login-register/";
+  // const baseURL = "http://3.13.110.40:8080/login-register/";
 
-  // const baseURL = "http://localhost:8080/login-register/";
+  const baseURL = "http://localhost:8080/login-register/";
 
   const [isLoggedIn, setLoggedIn] = useState(false);
 
@@ -127,8 +127,6 @@ export const AuthContextProvider = (props) => {
       console.log("STUD Auth");
       url = url + `?role=${USER_ROLE.STUDENT}`;
     }
-
-    console.log(url);
 
     const user = {
       emailId: userName,
@@ -260,10 +258,11 @@ export const AuthContextProvider = (props) => {
     return registeredValid;
   };
 
-  const updateStats = async (email) => {
+  const updateStats = async (email, section) => {
     const url = `${baseURL}login/updatestats`;
     const user = {
       email: email,
+      section: section,
     };
 
     await axios

@@ -6,6 +6,10 @@ import { useNavigate } from "react-router-dom";
 import "./DDQuestions.css";
 // import "./CAQuestions";
 
+import { AuthContext } from "../../../store/auth-context";
+import { useContext } from "react";
+import { SECTION } from "../../../enums/section_enums";
+
 import React, { useState } from "react";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
@@ -126,14 +130,23 @@ export const DDCorTemplate = (props) => {
     setDDAnswers({ ...DDAnswers });
   };
 
+  const authCtx = useContext(AuthContext);
+
   const routeChange = async (event) => {
     const url = "http://3.14.159.174:8443/situation_q/sq/sqData";
-    const statsurl = `http://3.13.110.40:8080/login-register/login/updatestats`;
+    // const statsurl = `http://3.13.110.40:8080/login-register/login/updatestats`;
 
-    await axios
-      .post(statsurl, {
-        email: userDets.emailId,
-      })
+    // await axios
+    //   .post(statsurl, {
+    //     email: userDets.emailId,
+    //   })
+    //   .then((res) => {})
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+
+    await authCtx
+      .onUpdateStats(userDets.emailId, SECTION.DD)
       .then((res) => {})
       .catch((err) => {
         console.log(err);

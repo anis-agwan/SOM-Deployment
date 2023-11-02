@@ -4,6 +4,9 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { React, useState } from "react";
 import "./CAQuestions.css";
+import { AuthContext } from "../../../store/auth-context";
+import { useContext } from "react";
+import { SECTION } from "../../../enums/section_enums";
 
 const user = JSON.parse(localStorage.getItem("userDetails"));
 
@@ -20,16 +23,25 @@ export const CACorTemplate = (props) => {
 
   let userDets = JSON.parse(localStorage.getItem("userDetails"));
 
+  const authCtx = useContext(AuthContext);
+
   const routeChange = async (event) => {
     const url =
       "http://3.14.159.174:8442/critical-thinking/critical-thinking/ctData";
 
-    const statsurl = `http://3.13.110.40:8080/login-register/login/updatestats`;
+    // const statsurl = `http://3.13.110.40:8080/login-register/login/updatestats`;
 
-    await axios
-      .post(statsurl, {
-        email: userDets.emailId,
-      })
+    // await axios
+    //   .post(statsurl, {
+    //     email: userDets.emailId,
+    //   })
+    //   .then((res) => {})
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+
+    await authCtx
+      .onUpdateStats(userDets.emailId, SECTION.CT)
       .then((res) => {})
       .catch((err) => {
         console.log(err);
