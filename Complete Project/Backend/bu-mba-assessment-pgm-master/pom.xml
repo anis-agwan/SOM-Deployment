@@ -64,4 +64,21 @@
 
     </dependencyManagement>
 
+    <build>
+        <finalName>bu-mba-pb</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <configuration>
+                            <mainClass>org.example.bu.som.assessment.personalBelief.AssessmentProgramStarter</mainClass>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
