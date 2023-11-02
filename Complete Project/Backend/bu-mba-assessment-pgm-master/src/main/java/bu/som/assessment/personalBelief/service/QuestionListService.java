@@ -21,24 +21,24 @@ public class QuestionListService {
         for(PBQuestions ques: questionList) {
 //            System.out.println(ques);
             Map<String, String> op1 = new HashMap<>() {{
-                put("value","Strongly Disagree");
-                put("idx", Integer.toString(ques.getStronglyDisAgree()));
+                put("value","Strongly Agree");
+                put("idx", Integer.toString(ques.getStronglyAgree()));
             }};
             Map<String, String> op2 = new HashMap<>() {{
-                put("value","Disagree");
-                put("idx", Integer.toString(ques.getDisAgree()));
+                put("value","Agree");
+                put("idx", Integer.toString(ques.getAgree()));
             }};
             Map<String, String> op3 = new HashMap<>() {{
                 put("value","Neutral");
                 put("idx", Integer.toString(ques.getNeutral()));
             }};
             Map<String, String> op4 = new HashMap<>() {{
-                put("value","Agree");
-                put("idx", Integer.toString(ques.getAgree()));
+                put("value","Disagree");
+                put("idx", Integer.toString(ques.getDisAgree()));
             }};
             Map<String, String> op5 = new HashMap<>() {{
-                put("value","Strongly Agree");
-                put("idx", Integer.toString(ques.getStronglyAgree()));
+                put("value","Strongly Disagree");
+                put("idx", Integer.toString(ques.getStronglyDisAgree()));
             }};
 
             List<Map<String, String>> options = Arrays.asList(op1, op2, op3, op4, op5);
