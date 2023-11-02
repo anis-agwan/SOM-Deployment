@@ -26,21 +26,33 @@ public class UserCompletionDetails {
     @Column(name = "B_NUMBER")
     private String bingNumber;
 
-    @Column(name = "PB_COMPLETE")
+    @Column(name = "NAME_FIRST")
+    private String firstName;
+
+    @Column(name = "NAME_LAST")
+    private String lastName;
+
+    @Column(name = "COMPLETE_PB")
     private Boolean pbComplete;
 
     @Column(name = "UPDT_STAT_PB")
     private LocalDateTime updatePBTime;
 
-    @Column(name = "CT_COMPLETE")
+    @Column(name = "COMPLETE_CT")
     private Boolean ctComplete;
 
     @Column(name = "UPDT_STAT_CT")
     private LocalDateTime updateCTTime;
 
-    @Column(name = "DD_COMPLETE")
+    @Column(name = "COMPLETE_DD")
     private Boolean ddComplete;
 
     @Column(name = "UPDT_STAT_DD")
     private LocalDateTime updateDDTime;
+
+    @Column(name = "COMPLETE_BI")
+    private Boolean biComplete;
+
+    @Column(name = "UPDT_STAT_BI")
+    private LocalDateTime updateBITime;
 }

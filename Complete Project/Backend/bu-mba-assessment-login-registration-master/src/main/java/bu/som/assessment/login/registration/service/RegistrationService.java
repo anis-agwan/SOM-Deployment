@@ -4,8 +4,11 @@ import bu.som.assessment.login.registration.Dto.ForgotPassResponseDTO;
 import bu.som.assessment.login.registration.Dto.NewUserDto;
 import bu.som.assessment.login.registration.entity.EmailDetails;
 import bu.som.assessment.login.registration.entity.TempToken;
+import bu.som.assessment.login.registration.entity.UserCompletionDetails;
 import bu.som.assessment.login.registration.entity.UserDetails;
+import bu.som.assessment.login.registration.enums.UserRole;
 import bu.som.assessment.login.registration.repository.TempTokenRepository;
+import bu.som.assessment.login.registration.repository.UCompRepo;
 import bu.som.assessment.login.registration.repository.UserDetailsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,9 @@ public class RegistrationService {
     UserDetailsRepository userDetailsRepository;
 
     @Autowired
+    private UCompRepo uCompRepo;
+
+    @Autowired
     TempTokenRepository tempTokenRepository;
 
     @Autowired
@@ -39,36 +45,46 @@ public class RegistrationService {
                 message = "Error : Email / B-Number already exists";
             } else {
                 UserDetails user = new UserDetails();
+                UserCompletionDetails compU = new UserCompletionDetails();
 //                user.setUpdateStatusCode("A");
+
                 user.setBingNumber(userDto.getBingNumber());
+
                 user.setFirstName(userDto.getFirstName());
                 user.setLastName(userDto.getLastName());
                 user.setEmailId(userDto.getEmailId());
+
                 user.setPassword(userDto.getPassword());
 
                 LocalDate date = LocalDate.now(ZoneId.of("America/New_York"));
-                System.out.println(date);
+//                System.out.println(date);
                 user.setCreatedAt(date);
 
                 LocalDateTime time = LocalDateTime.now(ZoneId.of("America/New_York"));
                 user.setUpdateStatusCode(time);
-
                 user.setRole(userRole);
+                if(userRole.equals(UserRole.student.role)) {
+                    compU.setEmailId(userDto.getEmailId());
+                    compU.setBingNumber(userDto.getBingNumber());
+                    compU.setFirstName(userDto.getFirstName());
+                    compU.setLastName(userDto.getLastName());
+                    compU.setPbComplete(false);
+                    compU.setCtComplete(false);
+                    compU.setDdComplete(false);
+                    compU.setBiComplete(false);
+                    compU.setUpdatePBTime(time);
+                    compU.setUpdateCTTime(time);
+                    compU.setUpdateDDTime(time);
+                    compU.setUpdateBITime(time);
+                    uCompRepo.save(compU);
+                }
                 tempTokenRepository.deleteById(userDto.getEmailId());
                 userDetailsRepository.save(user);
+
 
                 message = userDto.getFirstName() + ", You have been registered...";
             }
             return message;
-//        UserDetails user = new UserDetails();
-//        user.setUpdateStatusCode(userDetailsRepository.existsById(userDto.getEmailId()) ? "A" :  "U");
-//        user.setBingNumber(userDto.getBingNumber());
-//        user.setFirstName(userDto.getFirstName());
-//        user.setLastName(userDto.getLastName());
-//        user.setEmailId(userDto.getEmailId());
-//        user.setPassword(userDto.getPassword());
-//        user.setRole(userRole);
-//        userDetailsRepository.save(user);
     }
 
     protected String getSaltString() {

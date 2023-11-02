@@ -123,7 +123,8 @@ public class LoginController {
     @PostMapping("updatestats")
     public void updateTimeStats(@RequestBody HashMap<String, String> emailMap) {
         String email = emailMap.get("email");
-        loginService.updateStudentStats(email);
+        String section = emailMap.get("section");
+        loginService.updateStudentStats(email, section);
     }
 
     @GetMapping("getcomplete")

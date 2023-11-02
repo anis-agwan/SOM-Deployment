@@ -8,6 +8,7 @@ import bu.som.assessment.login.registration.entity.EmailDetails;
 import bu.som.assessment.login.registration.entity.TempToken;
 import bu.som.assessment.login.registration.entity.UserCompletionDetails;
 import bu.som.assessment.login.registration.entity.UserDetails;
+import bu.som.assessment.login.registration.enums.SectionEnum;
 import bu.som.assessment.login.registration.repository.TempTokenRepository;
 import bu.som.assessment.login.registration.repository.UCompRepo;
 import bu.som.assessment.login.registration.repository.UserDetailsRepository;
@@ -164,13 +165,29 @@ public class LoginService {
         }
     }
 
-    public void updateStudentStats(String email) {
-        if(repository.existsById(email)) {
+    public void updateStudentStats(String email, String section) {
+        if(repository.existsById(email) && uCompRepo.existsById(email)) {
             UserDetails student = repository.findByEmailId(email);
+            UserCompletionDetails user = uCompRepo.findByEmailId(email);
             LocalDateTime time = LocalDateTime.now(ZoneId.of("America/New_York"));
             student.setUpdateStatusCode(time);
-            System.out.println(student);
+
+            if (section.equals(SectionEnum.PB.section)) {
+                user.setPbComplete(true);
+                user.setUpdatePBTime(time);
+            } else if (section.equals(SectionEnum.CT.section)) {
+                user.setCtComplete(true);
+                user.setUpdateCTTime(time);
+            } else if (section.equals(SectionEnum.DD.section)) {
+                user.setDdComplete(true);
+                user.setUpdateDDTime(time);
+            } else if (section.equals(SectionEnum.BI.section)) {
+                user.setBiComplete(true);
+                user.setUpdateBITime(time);
+            }
+
             repository.save(student);
+            uCompRepo.save(user);
         }
     }
 

@@ -13,6 +13,7 @@ import PdfV01 from "../PDFFiles/PdfV01";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import BIMenus from "./BIMenus";
 import StudentTable from "./StudentTable";
+import { useEffect } from "react";
 
 function SidePanel() {
   let navigate = useNavigate();
@@ -51,6 +52,12 @@ function SidePanel() {
   const [ddData, setDDData] = useState();
   const [biData, setBIData] = useState();
   const [isDataLoading, setIsDataLoading] = useState(false);
+  const [allStudents, setAllStudents] = useState([]);
+  const [completedStudents, setCompStudents] = useState([]);
+  const [pbCompStudents, setPBCompStudents] = useState([]);
+  const [ctCompStudents, setCTCompStudents] = useState([]);
+  const [ddCompStudents, setDDCompStudents] = useState([]);
+  const [biCompStudents, setBICompStudents] = useState([]);
 
   const ShowDash = () => {
     if (DashShow === true) {
@@ -343,6 +350,59 @@ function SidePanel() {
     }
   };
 
+  const getAllStudents = async () => {
+    setIsDataLoading(true);
+
+    const baseUrl = "http://localhost:8080/login-register/login";
+
+    await axios
+      .get(`${baseUrl}/getcomplete`)
+      .then((res) => {
+        // console.log(res);
+        let students = res.data;
+        console.log(res.data);
+
+        let allComp = students.filter((student) => {
+          return (
+            student.pbComplete &&
+            student.ctComplete &&
+            student.ddComplete &&
+            student.biComplete
+          );
+        });
+
+        console.log("ALL", allComp);
+
+        let pbComp = students.filter((student) => {
+          return student.pbComplete;
+        });
+
+        let ctComp = students.filter((student) => {
+          return student.ctComplete;
+        });
+
+        let ddComp = students.filter((student) => {
+          return student.ddComplete;
+        });
+
+        let biComp = students.filter((student) => {
+          return student.biComplete;
+        });
+
+        setAllStudents(students);
+        setCompStudents(allComp);
+        setPBCompStudents(pbComp);
+        setCTCompStudents(ctComp);
+        setDDCompStudents(ddComp);
+        setBICompStudents(biComp);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    setIsDataLoading(false);
+  };
+
   const pdfReportsSearch = async (event) => {
     event.preventDefault();
 
@@ -416,6 +476,13 @@ function SidePanel() {
     let path = `/`;
     navigate(path);
   };
+
+  useEffect(() => {
+    setIsDataLoading(true);
+    getAllStudents();
+    // console.log(allStudents);
+    setIsDataLoading(false);
+  }, []);
 
   const inputRef = useRef(null);
   return (
@@ -492,7 +559,21 @@ function SidePanel() {
               <div className="DASHRightSection">
                 {/**Graphs can be added here */}
 
-                <StudentTable />
+                {!isDataLoading && completedStudents.length > 0 ? (
+                  <StudentTable students={completedStudents} />
+                ) : (
+                  <div
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <h2>No student has completed all the assessments</h2>
+                  </div>
+                )}
               </div>
             </div>
             <div className="DashSearchBar">
@@ -582,8 +663,25 @@ function SidePanel() {
             </form>
             <div className="PBRightSection">
               {/**Graphs can be added here */}
-              <h1>Personal Belief Student Grpahs</h1>
-              {graphPBShow && <ReportPB bnum={bNum} />}
+              {/* <h1>Personal Belief Student Grpahs</h1> */}
+
+              {graphPBShow ? (
+                <ReportPB bnum={bNum} />
+              ) : !isDataLoading && pbCompStudents.length > 0 ? (
+                <StudentTable students={pbCompStudents} />
+              ) : (
+                <div
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <h2>No student has completed Personal Belief assessment</h2>
+                </div>
+              )}
             </div>
             <div className="PBRightRecords">
               {/**Graphs can be added here */}
@@ -625,8 +723,24 @@ function SidePanel() {
             </form>
             <div className="PBRightSection">
               {/**Graphs can be added here */}
-              <h1>Critical Analysis Student Grpahs</h1>
-              {graphCTShow && <ReportCT bnum={bNum} />}
+              {/* <h1>Critical Analysis Student Grpahs</h1> */}
+              {graphCTShow ? (
+                <ReportCT bnum={bNum} />
+              ) : !isDataLoading && ctCompStudents.length > 0 ? (
+                <StudentTable students={ctCompStudents} />
+              ) : (
+                <div
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <h2>No student has completed Critical Thinking assessment</h2>
+                </div>
+              )}
             </div>
             <div className="PBRightRecords">
               {/**Graphs can be added here */}
@@ -668,8 +782,26 @@ function SidePanel() {
             </form>
             <div className="PBRightSection">
               {/**Graphs can be added here */}
-              <h1>Difficult Decisions Student Grpahs</h1>
-              {graphDDSHow && <ReportDD bnum={bNum} />}
+              {/* <h1>Difficult Decisions Student Grpahs</h1> */}
+              {graphDDSHow ? (
+                <ReportDD bnum={bNum} />
+              ) : !isDataLoading && ddCompStudents.length > 0 ? (
+                <StudentTable students={ddCompStudents} />
+              ) : (
+                <div
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <h2>
+                    No student has completed Difficult Decisions assessment
+                  </h2>
+                </div>
+              )}
             </div>
             <div className="PBRightRecords">
               {/**Graphs can be added here */}

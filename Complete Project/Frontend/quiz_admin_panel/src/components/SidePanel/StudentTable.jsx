@@ -1,15 +1,69 @@
-import MaterialTable from "material-table";
+import MaterialTable from "@material-table/core";
 
 import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
+import { SECTION } from "../../enums/section_enums";
 
-const StudentTable = () => {
+const StudentTable = (props) => {
+  const [studentAll, setAllStudents] = useState([]);
+
+  useEffect(() => {
+    console.log("STSA ", props.students);
+
+    let dd = [];
+
+    dd = props.students.map((student) => {
+      let st = {
+        name: `${student.firstName} ${student.lastName}`,
+        email: student.emailId,
+        bnumber: student.bingNumber,
+        completed: "Yes",
+      };
+
+      return st;
+    });
+
+    setAllStudents(dd);
+  }, []);
+
   const data = [
-    { name: "John", email: "john@gmail.com", age: 12, gender: "Male" },
-    { name: "Bren", email: "bren@gmail.com", age: 24, gender: "Male" },
-    { name: "Marry", email: "marry@gmail.com", age: 18, gender: "Female" },
-    { name: "Shohail", email: "shohail@gmail.com", age: 25, gender: "Male" },
-    { name: "Aseka", email: "aseka@gmail.com", age: 19, gender: "Female" },
-    { name: "Meuko", email: "meuko@gmail.com", age: 12, gender: "Female" },
+    {
+      name: "John",
+      email: "john@gmail.com",
+      bnumber: "B12345678",
+      completed: "Yes",
+    },
+    {
+      name: "Bren",
+      email: "bren@gmail.com",
+      bnumber: "B12345678",
+      completed: "Yes",
+    },
+    {
+      name: "Marry",
+      email: "marry@gmail.com",
+      bnumber: "B12345678",
+      completed: "Yes",
+    },
+    {
+      name: "Shohail",
+      email: "shohail@gmail.com",
+      bnumber: "B12345678",
+      completed: "Yes",
+    },
+    {
+      name: "Aseka",
+      email: "aseka@gmail.com",
+      bnumber: "B12345678",
+      completed: "Yes",
+    },
+    {
+      name: "Meuko",
+      email: "meuko@gmail.com",
+      bnumber: "B12345678",
+      completed: "Yes",
+    },
   ];
 
   const columns = [
@@ -22,23 +76,23 @@ const StudentTable = () => {
       field: "email",
     },
     {
-      title: "Age",
-      field: "age",
+      title: "B#",
+      field: "bnumber",
     },
     {
-      title: "Gender",
-      field: "gender",
+      title: "Assessment Complete",
+      field: "completed",
     },
   ];
 
   return (
     <MaterialTable
       style={{ width: "100%", padding: "10px" }}
-      title="Employee Details"
-      data={data}
+      title="Student Details"
+      data={studentAll}
       columns={columns}
       options={{
-        paging: false,
+        paging: true,
       }}
     />
   );
