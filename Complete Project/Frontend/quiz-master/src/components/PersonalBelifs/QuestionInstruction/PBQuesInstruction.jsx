@@ -6,7 +6,7 @@ import axios from "axios";
 export default function PBQuesInstruction() {
   let navigate = useNavigate();
   const [questions, setQuestions] = useState([]);
-  const baseURL = "http://3.13.110.40:8441/personal-beliefs/pb/";
+  const baseURL = "http://3.14.232.42:8441/personal-beliefs/pb/";
 
   const getQuestionsHandler = async () => {
     await axios

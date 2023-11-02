@@ -27,7 +27,7 @@ export const CACorTemplate = (props) => {
 
   const routeChange = async (event) => {
     const url =
-      "http://3.14.159.174:8442/critical-thinking/critical-thinking/ctData";
+      "http://3.14.232.42:8442/critical-thinking/critical-thinking/ctData";
 
     // const statsurl = `http://3.13.110.40:8080/login-register/login/updatestats`;
 

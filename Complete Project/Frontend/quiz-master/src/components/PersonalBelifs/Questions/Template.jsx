@@ -66,7 +66,7 @@ const Template = (props) => {
 
   const routeChange = async (event) => {
     console.log(user.bingNumber);
-    const url = "http://3.13.110.40:8441/personal-beliefs/pb/pbData/";
+    const url = "http://3.14.232.42:8441/personal-beliefs/pb/pbData/";
 
     // const statsurl = `http://3.13.110.40:8080/login-register/login/updatestats`;
     const statsurl = `http://localhost:8080/login-register/login/updatestats`;
