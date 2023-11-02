@@ -12,6 +12,7 @@ import { BIReport } from "./BIReport";
 import PdfV01 from "../PDFFiles/PdfV01";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import BIMenus from "./BIMenus";
+import StudentTable from "./StudentTable";
 
 function SidePanel() {
   let navigate = useNavigate();
@@ -487,7 +488,12 @@ function SidePanel() {
         {DashShow && (
           <div>
             <div className="DashtSection">
-              <h1>Dashboard</h1>
+              {/* <h1>Dashboard</h1> */}
+              <div className="DASHRightSection">
+                {/**Graphs can be added here */}
+
+                <StudentTable />
+              </div>
             </div>
             <div className="DashSearchBar">
               <div className="BIReports1">

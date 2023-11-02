@@ -5,6 +5,7 @@ import bu.som.assessment.login.registration.Dto.ForgotPassResponseDTO;
 import bu.som.assessment.login.registration.Dto.ForgotPasswordDTO;
 import bu.som.assessment.login.registration.Dto.LoginResponseDto;
 import bu.som.assessment.login.registration.entity.EmailDetails;
+import bu.som.assessment.login.registration.entity.UserCompletionDetails;
 import bu.som.assessment.login.registration.entity.UserDetails;
 import bu.som.assessment.login.registration.service.EmailServiceImpl;
 import bu.som.assessment.login.registration.service.LoginService;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin
@@ -122,5 +124,10 @@ public class LoginController {
     public void updateTimeStats(@RequestBody HashMap<String, String> emailMap) {
         String email = emailMap.get("email");
         loginService.updateStudentStats(email);
+    }
+
+    @GetMapping("getcomplete")
+    public List<UserCompletionDetails> getStudents() {
+        return loginService.getStudentCompletion();
     }
 }

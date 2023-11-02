@@ -3,16 +3,20 @@ package bu.som.assessment.login.registration.service;
 import bu.som.assessment.login.registration.Dto.ExistingUserDto;
 import bu.som.assessment.login.registration.Dto.ForgotPassResponseDTO;
 import bu.som.assessment.login.registration.Dto.LoginResponseDto;
+import bu.som.assessment.login.registration.Dto.UserCompleteDTO;
 import bu.som.assessment.login.registration.entity.EmailDetails;
 import bu.som.assessment.login.registration.entity.TempToken;
+import bu.som.assessment.login.registration.entity.UserCompletionDetails;
 import bu.som.assessment.login.registration.entity.UserDetails;
 import bu.som.assessment.login.registration.repository.TempTokenRepository;
+import bu.som.assessment.login.registration.repository.UCompRepo;
 import bu.som.assessment.login.registration.repository.UserDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -21,6 +25,9 @@ public class LoginService {
 
     @Autowired
     private UserDetailsRepository repository;
+
+    @Autowired
+    private UCompRepo uCompRepo;
 
     @Autowired
     TempTokenRepository tempTokenRepository;
@@ -167,4 +174,7 @@ public class LoginService {
         }
     }
 
+    public List<UserCompletionDetails> getStudentCompletion() {
+        return uCompRepo.findAll();
+    }
 }
