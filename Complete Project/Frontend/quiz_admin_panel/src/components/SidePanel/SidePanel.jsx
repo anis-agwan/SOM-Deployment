@@ -286,7 +286,7 @@ function SidePanel() {
   };
 
   const getPBData = async () => {
-    const baseURL = "http://3.13.110.40:8441/personal-beliefs/pb/getScores";
+    const baseURL = "http://3.14.232.42:8441/personal-beliefs/pb/getScores";
     if (bNumIsValid) {
       try {
         const response = await axios.get(`${baseURL}/${bNum}`);
@@ -305,7 +305,7 @@ function SidePanel() {
 
   const getCTData = async () => {
     const baseURL =
-      "http://3.14.159.174:8442/critical-thinking/critical-thinking/getScores";
+      "http://3.14.232.42:8442/critical-thinking/critical-thinking/getScores";
     if (bNumIsValid) {
       try {
         const response = await axios.get(`${baseURL}/${bNum}`);

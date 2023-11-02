@@ -61,7 +61,7 @@ export const ReportPB = (props) => {
   const [commentsData, setCommentsData] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const bNum = props.bnum;
-  const baseURL = "http://3.13.110.40:8441/personal-beliefs/pb/getScores";
+  const baseURL = "http://3.14.232.42:8441/personal-beliefs/pb/getScores";
   const getPBScoreHandler = async () => {
     // await axios.get(`${baseURL}/${user.bingNumber}`).then((response) => {
     //   // console.log(response.data.openToChangeScore);
