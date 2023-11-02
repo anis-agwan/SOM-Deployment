@@ -2,7 +2,11 @@
 import "./Evaluation2.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import * as React from "react";
+import { AuthContext } from "../../../store/auth-context";
+import { useContext } from "react";
+
 import axios from "axios";
+import { SECTION } from "../../../enums/section_enums";
 // import Evaluation2Data from "./Evaluation2Data";
 const Evaluation2Data = [
   {
@@ -141,6 +145,8 @@ const Evaluation2 = () => {
   const [selectedOptionO1, setSelectedOptionO1] = React.useState(null);
   const [selectedOptionO2, setSelectedOptionO2] = React.useState(null);
 
+  const authCtx = useContext(AuthContext);
+
   function getE2TextAreaValue(event) {
     event.preventDefault();
     // var textarea = document.getElementById("E1ObservationID");
@@ -273,6 +279,18 @@ const Evaluation2 = () => {
   const baseURL = "http://3.14.159.174:8448/bbim/bi/";
 
   const submitSimEval1 = async () => {
+    const statsurl = `http://localhost:8080/login-register/login/updatestats`;
+
+    console.log("SEC: ", SECTION.PB);
+    let userDets = JSON.parse(localStorage.getItem("userDetails"));
+
+    await authCtx
+      .onUpdateStats(userDets.emailId, SECTION.BI)
+      .then((res) => {})
+      .catch((err) => {
+        console.log(err);
+      });
+
     const url = `${baseURL}biEvaluation1Data`;
     const data = {
       bingNumber: answerObject.bingNumber,
