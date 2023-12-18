@@ -7,6 +7,7 @@ import bu.som.assessment.login.registration.Dto.LoginResponseDto;
 import bu.som.assessment.login.registration.entity.EmailDetails;
 import bu.som.assessment.login.registration.entity.UserCompletionDetails;
 import bu.som.assessment.login.registration.entity.UserDetails;
+import bu.som.assessment.login.registration.enums.UserRole;
 import bu.som.assessment.login.registration.service.EmailServiceImpl;
 import bu.som.assessment.login.registration.service.LoginService;
 import lombok.extern.slf4j.Slf4j;
@@ -130,5 +131,18 @@ public class LoginController {
     @GetMapping("getcomplete")
     public List<UserCompletionDetails> getStudents() {
         return loginService.getStudentCompletion();
+    }
+
+    @PostMapping("invite")
+    public String inviteUser(@RequestBody HashMap<String, String> details) {
+        System.out.println(details.get("email"));
+        String email = details.get("email");
+        String mess = "";
+        String role = details.get("role");
+        if(role.equals(UserRole.faculty)) {
+            System.out.println("FACULTY");
+            return loginService.inviteFaculty(email);
+        }
+        return loginService.inviteStudent(email);
     }
 }
