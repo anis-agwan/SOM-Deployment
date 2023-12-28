@@ -195,6 +195,15 @@ public class LoginService {
         return uCompRepo.findAll();
     }
 
+    public boolean getStudentDoneAll(String bNum) {
+        UserCompletionDetails user = uCompRepo.findByBingNumber(bNum);
+        System.out.println(user);
+        if(user.getCtComplete() && user.getPbComplete() && user.getBiComplete() && user.getDdComplete()) {
+            return  true;
+        }
+        return false;
+    }
+
     public String inviteStudent(String email) {
         String token = "http://3.14.79.66:3000/";
         String message = "";

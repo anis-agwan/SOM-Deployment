@@ -133,6 +133,12 @@ public class LoginController {
         return loginService.getStudentCompletion();
     }
 
+    @PostMapping("getstudcomplete")
+    public boolean getStudentWhoComp(@RequestBody HashMap<String, String> details) {
+        System.out.println(details.get("bnumber"));
+        return loginService.getStudentDoneAll(details.get("bnumber"));
+    }
+
     @PostMapping("invite")
     public String inviteUser(@RequestBody HashMap<String, String> details) {
         System.out.println(details.get("email"));
