@@ -1,5 +1,6 @@
 package bu.som.assessment.login.registration.controller;
 
+import bu.som.assessment.login.registration.Dto.DeleteResponseDTO;
 import bu.som.assessment.login.registration.Dto.ExistingUserDto;
 import bu.som.assessment.login.registration.Dto.ForgotPassResponseDTO;
 import bu.som.assessment.login.registration.Dto.ForgotPasswordDTO;
@@ -151,4 +152,25 @@ public class LoginController {
         }
         return loginService.inviteStudent(email);
     }
+
+    @PostMapping({"getfaculty"})
+    public List<UserDetails> getFaculty(@RequestBody HashMap<String, String> details) {
+        List<UserDetails> allFaculty = this.loginService.getAllFaculty((String)details.get("email"));
+        System.out.println(allFaculty);
+        return allFaculty;
+    }
+
+    @PostMapping({"deletefaculty"})
+    public DeleteResponseDTO deleteFaculty(@RequestBody HashMap<String, String> details) {
+        System.out.println((String)details.get("email"));
+        return this.loginService.deleteFaculty((String)details.get("email"));
+    }
+
+    @PostMapping({"deletestudent"})
+    public DeleteResponseDTO deleteStudent(@RequestBody HashMap<String, String> details) {
+        System.out.println((String)details.get("email"));
+        return this.loginService.deleteStudent((String)details.get("email"));
+    }
+
+
 }

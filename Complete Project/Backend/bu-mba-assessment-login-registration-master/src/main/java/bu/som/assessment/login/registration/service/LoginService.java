@@ -1,5 +1,6 @@
 package bu.som.assessment.login.registration.service;
 
+import bu.som.assessment.login.registration.Dto.DeleteResponseDTO;
 import bu.som.assessment.login.registration.Dto.ExistingUserDto;
 import bu.som.assessment.login.registration.Dto.ForgotPassResponseDTO;
 import bu.som.assessment.login.registration.Dto.LoginResponseDto;
@@ -17,6 +18,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -205,7 +208,7 @@ public class LoginService {
     }
 
     public String inviteStudent(String email) {
-        String token = "http://3.14.79.66:3000/";
+        String token = "http://3.20.242.19:3000/";
         String message = "";
         if(!repository.existsById(email)) {
             EmailDetails emailDetails = new EmailDetails();
@@ -222,7 +225,7 @@ public class LoginService {
     }
 
     public String inviteFaculty(String email) {
-        String token = "http://3.23.60.160:3000/";
+        String token = "http://3.139.153.217:3000/";
         String message = "";
         if(!repository.existsById(email)) {
             EmailDetails emailDetails = new EmailDetails();
@@ -236,6 +239,122 @@ public class LoginService {
         }
 
         return  message;
+    }
+
+    public List<UserDetails> getAllFaculty(String email) {
+        try {
+            List<UserDetails> all = this.repository.findAll();
+            List<UserDetails> allFaculty = new ArrayList<>();
+            Iterator var4 = all.iterator();
+
+            while(var4.hasNext()) {
+                UserDetails user = (UserDetails)var4.next();
+                if (user.getRole().contains("faculty") && !user.getEmailId().contains(email)) {
+                    user.setPassword("");
+                    allFaculty.add(user);
+                }
+            }
+
+            System.out.println(allFaculty);
+            return allFaculty;
+        } catch (Exception var6) {
+            Exception err = var6;
+            System.out.println(err);
+            return null;
+        }
+    }
+
+    public DeleteResponseDTO deleteFaculty(String email) {
+        new UserDetails();
+        UserDetails res = this.repository.findByEmailId(email);
+        DeleteResponseDTO response = new DeleteResponseDTO();
+        if (res == null) {
+            response.setIsDeleted(false);
+            response.setEmail(email);
+            response.setMessage("No such faculty found");
+            response.setStatus(404);
+            return response;
+        } else {
+            System.out.println(res);
+            String role = res.getRole();
+            if (role.equals("admin")) {
+                response.setIsDeleted(false);
+                response.setEmail(email);
+                response.setMessage("Cant delete an admin");
+                response.setStatus(101);
+                return response;
+            } else if (role.equals("faculty")) {
+                try {
+                    this.repository.deleteById(email);
+                    System.out.println("Successfully deleted the faculty");
+                    response.setIsDeleted(true);
+                    response.setEmail(email);
+                    response.setMessage("Successfully deleted the faculty");
+                    response.setStatus(200);
+                    return response;
+                } catch (Exception var7) {
+                    System.out.println("Cant delete");
+                    response.setIsDeleted(false);
+                    response.setEmail(email);
+                    response.setMessage("Cant delete because of database issue");
+                    response.setStatus(101);
+                    return response;
+                }
+            } else {
+                response.setIsDeleted(false);
+                response.setEmail(email);
+                response.setMessage("Can not delete a student");
+                response.setStatus(101);
+                return response;
+            }
+        }
+    }
+
+    public DeleteResponseDTO deleteStudent(String email) {
+        new UserDetails();
+        UserDetails res = this.repository.findByEmailId(email);
+        DeleteResponseDTO response = new DeleteResponseDTO();
+        if (res == null) {
+            response.setIsDeleted(false);
+            response.setEmail(email);
+            response.setMessage("No such student found");
+            response.setStatus(404);
+            return response;
+        } else {
+            System.out.println(res);
+            String role = res.getRole();
+            if (role.equals("admin")) {
+                response.setIsDeleted(false);
+                response.setEmail(email);
+                response.setMessage("Cant delete an admin");
+                response.setStatus(101);
+                return response;
+            } else if (role.equals("student")) {
+                try {
+                    this.repository.deleteById(email);
+                    this.uCompRepo.deleteById(email);
+                    System.out.println("Successfully deleted the student");
+                    response.setIsDeleted(true);
+                    response.setEmail(email);
+                    response.setMessage("Successfully deleted the student");
+                    response.setStatus(200);
+                    return response;
+                } catch (Exception var7) {
+                    System.out.println("Cant delete");
+                    response.setIsDeleted(false);
+                    response.setEmail(email);
+                    response.setMessage("Cant delete because of database issue");
+                    response.setStatus(101);
+                    return response;
+                }
+            } else {
+                response.setIsDeleted(false);
+                response.setEmail(email);
+                response.setMessage("Can not delete a faculty");
+                response.setStatus(101);
+                return response;
+            }
+        }
     }
 
 }
