@@ -41,6 +41,12 @@ public class RegistrationService {
 
     public String saveUser(NewUserDto userDto, String userRole) throws SQLException, DataIntegrityViolationException {
             String message;
+
+            if(userDetailsRepository.existsByBingNumber(userDto.getBingNumber())) {
+                System.out.println("Duplicate BNUMBER");
+                throw new DataIntegrityViolationException("Duplicate BNumber");
+            }
+
             if (userDetailsRepository.existsById(userDto.getEmailId())) {
                 message = "Error : Email / B-Number already exists";
             } else {
@@ -78,7 +84,7 @@ public class RegistrationService {
                     compU.setUpdateBITime(time);
                     uCompRepo.save(compU);
                 }
-                tempTokenRepository.deleteById(userDto.getEmailId());
+//                tempTokenRepository.deleteById(userDto.getEmailId());
                 userDetailsRepository.save(user);
 
 

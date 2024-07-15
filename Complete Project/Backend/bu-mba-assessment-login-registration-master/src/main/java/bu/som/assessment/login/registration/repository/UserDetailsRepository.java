@@ -9,4 +9,5 @@ public interface UserDetailsRepository extends JpaRepository<UserDetails, String
     public UserDetails findByBingNumber(String bNumber);
     public UserDetails findByEmailId(String email);
     public UserDetails findAllByRole(String role);
+    public boolean existsByBingNumber(String bNumber);
 }
